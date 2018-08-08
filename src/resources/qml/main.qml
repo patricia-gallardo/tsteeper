@@ -1,6 +1,6 @@
 import QtQml 2.0
 import QtQuick 2.0
-import QtQuick.Controls 2.0
+import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.0
 import QtQuick.Layouts 1.0
 import QtQuick.Window 2.0
@@ -115,6 +115,22 @@ Window {
             }
 
             url: "https://www.youtube.com"
+        }
+
+        Action {
+            shortcut: "Escape"
+            onTriggered: {
+                console.log("Escape pressed.");
+                bar.unfocusAddressField()
+            }
+        }
+
+        Action {
+            shortcut: "F8"
+            onTriggered: {
+                console.log("F8 pressed.");
+                bar.focusAddressField();
+            }
         }
     }
 }

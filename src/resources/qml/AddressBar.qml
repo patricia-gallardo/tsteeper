@@ -16,6 +16,14 @@ Rectangle {
 
     color: barColor
 
+    function focusAddressField() {
+        label.visible = false;
+    }
+
+    function unfocusAddressField() {
+        label.visible = true;
+    }
+
     RowLayout {
         id: displaybox
         anchors.fill: parent
@@ -50,7 +58,7 @@ Rectangle {
                 anchors.fill: label
                 hoverEnabled: true
                 cursorShape: Qt.IBeamCursor
-                onClicked: label.visible = false;
+                onClicked: root.focusAddressField();
             }
         }
 
@@ -72,16 +80,16 @@ Rectangle {
                 onActiveFocusChanged: {
                     if (activeFocus) {
                         inputField.text = labelText.text;
-                        label.visible = false;
+                        root.focusAddressField();
                         inputField.selectAll();
                     } else {
-                        label.visible = true;
+                        root.unfocusAddressField();
                     }
                 }
 
                 onAccepted: {
-                    root.goToAddress(inputField.text)
-                    label.visible = true;
+                    root.goToAddress(inputField.text);
+                    root.unfocusAddressField();
                 }
             }
         }
