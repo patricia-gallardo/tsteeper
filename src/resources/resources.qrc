@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/">
         <file>qml/main.qml</file>
+        <file>qml/AddressBar.qml</file>
+        <file>qml/NavigationButton.qml</file>
     </qresource>
 </RCC>
