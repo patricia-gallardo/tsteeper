@@ -1,4 +1,5 @@
 import QtQuick 2.11
+import QtQuick.Layouts 1.0
 
 Rectangle {
     id: root
@@ -15,14 +16,14 @@ Rectangle {
 
     color: barColor
 
-    Row {
+    RowLayout {
         id: displaybox
         anchors.fill: parent
-        padding: root.barPadding
         spacing: root.barPadding
 
         NavigationButton {
             id: backButton
+            Layout.leftMargin: root.barPadding
             text: "<"
             onClicked: root.back();
         }
@@ -33,14 +34,9 @@ Rectangle {
             onClicked: root.forward();
         }
 
-        Rectangle {
+        AddressBackground {
             id: label
-            anchors.verticalCenter: parent.verticalCenter
-
-            width: root.width - backButton.width - forwardButton.width - (root.barPadding * 4)
             height: backButton.height
-            radius: root.barRadius
-            color: "white"
 
             Text {
                 id: labelText
@@ -58,17 +54,11 @@ Rectangle {
             }
         }
 
-        Rectangle {
+        AddressBackground {
             id: field
-            anchors.verticalCenter: parent.verticalCenter
-
-            width: label.width
-            height: label.height
-            radius: label.radius
+            height: backButton.height
 
             visible: !label.visible
-
-            color: label.color
 
             TextInput {
                 id: inputField
