@@ -6,8 +6,10 @@ import QtQuick.Layouts 1.11
 import QtQuick.Window 2.11
 import QtWebEngine 1.7
 
-import "theme.js" as Theme
 import "addresses.js" as Addesses
+import "loading.js" as Loading
+import "theme.js" as Theme
+import "url.js" as URL
 
 QtObject {
 
@@ -58,6 +60,7 @@ QtObject {
                         property alias title: webView.title
                         Layout.fillWidth: true
                         Layout.fillHeight: true
+
                         AddressBar {
                             id: bar
                             Layout.preferredHeight:30
@@ -81,87 +84,9 @@ QtObject {
 
                             onUrlChanged: tabUrl = url
                             onTitleChanged: tabTitle = title
-
-                            function searchUrl(terms) {
-                                return Addesses.search + encodeURI(terms);
-                            }
-
-                            function hasWhiteSpace(s) {
-                                return /\s/g.test(s);
-                            }
-
-                            function hasPeriod(s) {
-                                return /\./.test(s);
-                            }
-
-                            function hasProtocol(s) {
-                                return /^(https?|ftp)/.test(s);
-                            }
-
-                            onTypedTextChanged: {
-                                if (hasWhiteSpace(typedText) || !hasPeriod(typedText)) {
-                                    webView.url = searchUrl(typedText);
-                                } else if (!hasProtocol(typedText)) {
-                                    webView.url = Addesses.defaultPrefix + typedText;
-                                } else {
-                                    webView.url = typedText;
-                                }
-                            }
-
+                            onTypedTextChanged: webView.url = URL.construct(typedText)
                             onLoadingChanged: function(loadRequest) {
-                                console.log("Loading changed for request url : " + loadRequest.url);
-
-                                switch(loadRequest.status) {
-                                case WebEngineView.LoadStartedStatus: {
-                                    console.log("status STARTED");
-                                    break;
-                                }
-                                case WebEngineView.LoadStoppedStatus: {
-                                    console.log("status STOPPED");
-                                    break;
-                                }
-                                case WebEngineView.LoadSucceededStatus: {
-                                    console.log("status SUCCEEDED");
-                                    break;
-                                }
-                                case WebEngineView.LoadFailedStatus: {
-                                    console.log("status FAILED");
-                                    console.log("errorCode   : " + loadRequest.errorCode);
-                                    console.log("errorString : " + loadRequest.errorString);
-
-                                    switch (loadRequest.errorDomain) {
-                                    case WebEngineView.NoErrorDomain : {
-                                        console.log("Error Domain NONE");
-                                        break;
-                                    }
-                                    case WebEngineView.InternalErrorDomain : {
-                                        console.log("Error Domain INTERNAL");
-                                        break;
-                                    }
-                                    case WebEngineView.ConnectionErrorDomain : {
-                                        console.log("Error Domain CONNECTION");
-                                        break;
-                                    }
-                                    case WebEngineView.CertificateErrorDomain : {
-                                        console.log("Error Domain CERTIFICATE");
-                                        break;
-                                    }
-                                    case WebEngineView.HttpErrorDomain : {
-                                        console.log("Error Domain HTTP");
-                                        break;
-                                    }
-                                    case WebEngineView.FtpErrorDomain : {
-                                        console.log("Error Domain FTP");
-                                        break;
-                                    }
-                                    case WebEngineView.DnsErrorDomain : {
-                                        console.log("Error Domain DNS");
-                                        break;
-                                    }
-                                    }
-                                    break;
-                                }
-                                }
+                                Loading.process(loadRequest)
                             }
                         }
 
@@ -187,16 +112,12 @@ QtObject {
 
         Action {
             shortcut: "Ctrl+T"
-            onTriggered: {
-                tabBar.makeNewTab();
-            }
+            onTriggered: tabBar.makeNewTab();
         }
 
         Action {
             shortcut: "Ctrl+W"
-            onTriggered: {
-                tabBar.closeCurrentTab();
-            }
+            onTriggered: tabBar.closeCurrentTab();
         }
 
         Action {
