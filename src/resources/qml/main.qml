@@ -14,7 +14,6 @@ QtObject {
 
     property Component topLevelWindowComponent: TopLevelWindow {
         globalContext: root
-        onClosing: destroy()
     }
 
     function createTopLevelWindow(profile) {
