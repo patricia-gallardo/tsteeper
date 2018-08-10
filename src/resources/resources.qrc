@@ -5,6 +5,7 @@
         <file>qml/AddressBar.qml</file>
         <file>qml/NavigationButton.qml</file>
         <file>qml/TabToolbar.qml</file>
+        <file>qml/TopLevelWindow.qml</file>
         <file>qml/addresses.js</file>
         <file>qml/loading.js</file>
         <file>qml/theme.js</file>

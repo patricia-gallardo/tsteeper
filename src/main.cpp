@@ -10,6 +10,7 @@ int main(int argc, char *argv[]) {
 
   QQmlApplicationEngine engine;
   engine.load(QUrl(QStringLiteral("qrc:/qml/main.qml")));
+  QMetaObject::invokeMethod(engine.rootObjects().first(), "start");
 
   return app.exec();
 }
