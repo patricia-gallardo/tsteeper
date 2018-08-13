@@ -47,7 +47,7 @@ Rectangle {
             Layout.leftMargin: root.barPadding
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: "outline-arrow_back_ios-24px.svg"
+            buttonIcon: Theme.backIcon
             buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
@@ -59,7 +59,7 @@ Rectangle {
             id: forwardButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: "outline-arrow_forward_ios-24px.svg"
+            buttonIcon: Theme.forwardIcon
             buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
@@ -71,7 +71,7 @@ Rectangle {
             id: reloadButton
             Layout.preferredHeight: displaybox.itemHeight
             Layout.preferredWidth: displaybox.buttonWidth
-            buttonIcon: "outline-refresh-24px.svg"
+            buttonIcon: Theme.reloadIcon
             buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor

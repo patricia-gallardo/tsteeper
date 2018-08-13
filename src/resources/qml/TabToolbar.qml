@@ -65,8 +65,17 @@ RowLayout {
                         width: 12
                         anchors.right: tabLabel.right
                         anchors.verticalCenter: tabLabel.verticalCenter
+                        spacing: 0
+                        padding: 0
 
                         onClicked: closeTabByIndex(index);
+
+                        icon.source: Theme.closeTabIcon
+                        property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
+                        icon.color: tab.hovered ? iconColor : tabBackground.color
+                        icon.height: 12
+                        icon.width: 12
+                        icon.name: qsTr("Close Tab")
 
                         background: Rectangle {
                             property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor

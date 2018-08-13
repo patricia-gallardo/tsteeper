@@ -13,5 +13,6 @@
         <file>qml/outline-arrow_back_ios-24px.svg</file>
         <file>qml/outline-arrow_forward_ios-24px.svg</file>
         <file>qml/outline-refresh-24px.svg</file>
+        <file>qml/outline-close-24px.svg</file>
     </qresource>
 </RCC>
