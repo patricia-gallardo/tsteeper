@@ -12,6 +12,7 @@ Rectangle {
     signal goToAddress(string address)
     signal back()
     signal forward()
+    signal reload()
 
     property int barPadding: 2
     property int barRadius: 2
@@ -54,6 +55,15 @@ Rectangle {
             buttonHighlightColor: root.highlightColor
             buttonTextColor: root.textColor
             onClicked: root.forward();
+        }
+
+        NavigationButton {
+            id: reloadButton
+            text: "O"
+            buttonColor: root.addressBarColor
+            buttonHighlightColor: root.highlightColor
+            buttonTextColor: root.textColor
+            onClicked: root.reload();
         }
 
         Item {

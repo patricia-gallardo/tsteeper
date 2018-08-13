@@ -87,6 +87,7 @@ Window {
                         url: webView.url
                         offTheRecord: root.windowOffTheRecord
 
+                        onReload: webView.reload();
                         onBack: webView.goBack();
                         onForward: webView.goForward();
                         onGoToAddress: webView.typedText = address;
