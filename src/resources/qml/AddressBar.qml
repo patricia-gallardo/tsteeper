@@ -69,7 +69,7 @@ Rectangle {
                     id: labelText
                     anchors.verticalCenter: parent.verticalCenter
                     leftPadding: root.barPadding
-                    color: root.offTheRecord? Theme.offTheRecordTextColor : Theme.textColor
+                    color: Theme.textColor
                 }
 
                 MouseArea {
@@ -97,6 +97,7 @@ Rectangle {
                     selectByMouse: true
                     selectedTextColor: Theme.selectedTextColor
                     selectionColor: Theme.selectionColor
+                    color: Theme.textColor
 
                     onActiveFocusChanged: {
                         if (activeFocus) {
