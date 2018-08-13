@@ -14,7 +14,7 @@ Rectangle {
     signal forward()
     signal reload()
 
-    property int barPadding: 2
+    property int barPadding: 4
     property int barRadius: 2
 
 
@@ -38,38 +38,51 @@ Rectangle {
         anchors.fill: parent
         spacing: root.barPadding
 
+        property int itemHeight: root.height - (2*root.barPadding)
+        property int buttonWidth: itemHeight
+        property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
+
         NavigationButton {
             id: backButton
             Layout.leftMargin: root.barPadding
-            text: "<"
+            Layout.preferredHeight: displaybox.itemHeight
+            Layout.preferredWidth: displaybox.buttonWidth
+            buttonIcon: "outline-arrow_back_ios-24px.svg"
+            buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
-            buttonTextColor: root.textColor
+            buttonName: qsTr("Back")
             onClicked: root.back();
         }
 
         NavigationButton {
             id: forwardButton
-            text: ">"
+            Layout.preferredHeight: displaybox.itemHeight
+            Layout.preferredWidth: displaybox.buttonWidth
+            buttonIcon: "outline-arrow_forward_ios-24px.svg"
+            buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
-            buttonTextColor: root.textColor
+            buttonName: qsTr("Forward")
             onClicked: root.forward();
         }
 
         NavigationButton {
             id: reloadButton
-            text: "O"
+            Layout.preferredHeight: displaybox.itemHeight
+            Layout.preferredWidth: displaybox.buttonWidth
+            buttonIcon: "outline-refresh-24px.svg"
+            buttonIconColor: displaybox.iconColor
             buttonColor: root.addressBarColor
             buttonHighlightColor: root.highlightColor
-            buttonTextColor: root.textColor
+            buttonName: qsTr("Reload")
             onClicked: root.reload();
         }
 
         Item {
             Layout.rightMargin: 2
             Layout.fillWidth: true
-            Layout.preferredHeight: backButton.height
+            Layout.preferredHeight: displaybox.itemHeight
 
             AddressBackground {
                 id: label

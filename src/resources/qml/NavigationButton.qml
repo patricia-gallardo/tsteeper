@@ -6,20 +6,22 @@ import "theme.js" as Theme
 
 Button {
     id: root
-    height: parent.height - (parent.padding * 2)
-    width: height
 
     property string buttonHighlightColor
     property string buttonColor
-    property string buttonTextColor
+    property string buttonName
+    property string buttonIcon
+    property string buttonIconColor
 
-    contentItem: Text {
-        text: root.text
-        font: root.font
-        color: buttonTextColor
-        horizontalAlignment: Text.AlignHCenter
-        verticalAlignment: Text.AlignVCenter
-    }
+    display: AbstractButton.IconOnly
+    spacing: 0
+    padding: 2
+
+    icon.source: buttonIcon
+    icon.color: buttonIconColor
+    icon.height: 30
+    icon.width: 30
+    icon.name: buttonName
 
     background: Rectangle {
         id: style

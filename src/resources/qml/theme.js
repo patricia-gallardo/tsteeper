@@ -11,11 +11,13 @@ var veryDarkPrivate = "#686256"
 var offTheRecordColor = lightPrivate
 var offTheRecordHightlight = veryLightPrivate
 var offTheRecordLowlight = darkPrivate
+var offTheRecordIconColor = "white"
 var offTheRecordTextColor = "white"
 
 var addressBarColor = light
 var addressBarHighlight = veryLight
 var addressBarLowlight = dark
+var addressBarIconColor = veryDark
 var textColor = "black"
 
 var addressFieldBackground = "white"
