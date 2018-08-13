@@ -18,12 +18,16 @@ QtObject {
 
     function createTopLevelWindow(profile) {
         var window = topLevelWindowComponent.createObject(root);
-        window.currentPage.profile = profile;
+        window.windowProfile = profile;
         return window;
     }
 
     function createPublicWindow() {
         createTopLevelWindow(publicProfile);
+    }
+
+    function createPrivateWindow() {
+        createTopLevelWindow(privateProfile);
     }
 
     function start() {

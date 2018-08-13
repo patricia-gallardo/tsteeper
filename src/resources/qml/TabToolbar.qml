@@ -11,6 +11,7 @@ RowLayout {
     Layout.fillWidth: true
     spacing: 0
 
+    property bool offTheRecord: false
     property alias currentIndex: tabs.currentIndex
     property alias model: tabsRepeater.model
 
@@ -52,7 +53,7 @@ RowLayout {
 
                     text: tab.text
                     font: tab.font
-                    color: Theme.textColor
+                    color: root.offTheRecord? Theme.offTheRecordTextColor : Theme.textColor
                     horizontalAlignment: Text.AlignLeft
                     verticalAlignment: Text.AlignVCenter
                     elide: Text.ElideRight
@@ -68,7 +69,8 @@ RowLayout {
                         onClicked: closeTabByIndex(index);
 
                         background: Rectangle {
-                            color: tab.hovered ? Theme.light : "transparent"
+                            property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
+                            color: tab.hovered ? buttonColor : "transparent"
                             border.color: tabBackground.color
                             border.width: tab.hovered && closeTab.hovered ? (closeTab.down? 1 : 0) : 1
                             radius: 2
@@ -78,7 +80,10 @@ RowLayout {
 
                 background: Rectangle {
                     id: tabBackground
-                    color: tab.hovered ? Theme.dark : (currentTab ? Theme.light : Theme.veryLight)
+                    property string offTheRecordColor: tab.hovered ? Theme.offTheRecordHightlight : (tab.currentTab ? Theme.offTheRecordColor : Theme.offTheRecordLowlight)
+                    property string onTheRecordColor: tab.hovered ? Theme.addressBarHighlight : (tab.currentTab ? Theme.addressBarColor : Theme.addressBarLowlight)
+
+                    color: root.offTheRecord ? offTheRecordColor : onTheRecordColor
                 }
             }
         }
@@ -94,7 +99,9 @@ RowLayout {
         onClicked: makeNewTab();
 
         background: Rectangle {
-            color: newTab.hovered ? Theme.dark : Theme.light
+            property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
+            property string buttonHightlightColor: root.offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
+            color: newTab.hovered ? buttonHightlightColor : buttonColor
             border.color: Theme.tabBarBackground
             border.width: newTab.hovered ? 0 : 1
             radius: 2

@@ -15,10 +15,18 @@ Window {
     id: root
     property QtObject globalContext
     property Item currentPage: pagesStack.currentPage
+    property QtObject windowProfile
+    property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
     width: Screen.desktopAvailableWidth
     height: Screen.desktopAvailableHeight
 
     visible: true
+
+    onWindowProfileChanged: {
+        if (windowProfile) {
+            tabBar.makeNewTab();
+        }
+    }
 
     function getTitle(currentIndex) {
         var current = tabModel.get(currentIndex);
@@ -29,7 +37,6 @@ Window {
 
     ListModel {
         id: tabModel
-        Component.onCompleted: tabBar.makeNewTab()
     }
 
     ColumnLayout {
@@ -41,6 +48,7 @@ Window {
             id : tabBar
             currentIndex: pagesStack.currentIndex
             model: tabModel
+            offTheRecord: root.windowOffTheRecord
         }
 
         StackLayout {
@@ -77,6 +85,7 @@ Window {
                         Layout.fillWidth: true
 
                         url: webView.url
+                        offTheRecord: root.windowOffTheRecord
 
                         onBack: webView.goBack();
                         onForward: webView.goForward();
@@ -94,6 +103,7 @@ Window {
 
                         onUrlChanged: tabUrl = url
                         onTitleChanged: tabTitle = title
+                        profile: root.windowProfile
                         onTypedTextChanged: webView.url = URL.construct(typedText)
                         onLoadingChanged: function(loadRequest) {
                             Loading.process(loadRequest)
@@ -149,5 +159,10 @@ Window {
     Action {
         shortcut: "Ctrl+N"
         onTriggered: globalContext.createPublicWindow();
+    }
+
+    Action {
+        shortcut: "Ctrl+Shift+N"
+        onTriggered: globalContext.createPrivateWindow();
     }
 }

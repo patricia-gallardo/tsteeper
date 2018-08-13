@@ -7,6 +7,7 @@ Rectangle {
     id: root
 
     property alias url: labelText.text
+    property bool offTheRecord: false
 
     signal goToAddress(string address)
     signal back()
@@ -15,7 +16,11 @@ Rectangle {
     property int barPadding: 2
     property int barRadius: 2
 
-    color: Theme.light
+
+    property string highlightColor: offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
+    property string addressBarColor: offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
+    property string textColor: offTheRecord ? Theme.offTheRecordTextColor : Theme.textColor
+    color: addressBarColor
 
     function focusAddressField() {
         console.log("Focus Address Field: Set label visible to false")
@@ -36,12 +41,18 @@ Rectangle {
             id: backButton
             Layout.leftMargin: root.barPadding
             text: "<"
+            buttonColor: root.addressBarColor
+            buttonHighlightColor: root.highlightColor
+            buttonTextColor: root.textColor
             onClicked: root.back();
         }
 
         NavigationButton {
             id: forwardButton
             text: ">"
+            buttonColor: root.addressBarColor
+            buttonHighlightColor: root.highlightColor
+            buttonTextColor: root.textColor
             onClicked: root.forward();
         }
 
@@ -58,7 +69,7 @@ Rectangle {
                     id: labelText
                     anchors.verticalCenter: parent.verticalCenter
                     leftPadding: root.barPadding
-                    color: Theme.textColor
+                    color: root.offTheRecord? Theme.offTheRecordTextColor : Theme.textColor
                 }
 
                 MouseArea {
