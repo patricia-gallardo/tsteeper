@@ -1,4 +1,5 @@
 import QtQml 2.0
+import QtQml.Models 2.11
 import QtQuick 2.11
 import QtQuick.Controls 2.4
 import QtQuick.Controls.Material 2.0
@@ -72,60 +73,14 @@ Window {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
-                ColumnLayout {
+                WebPage {
                     id: page
-                    property alias title: webView.title
-                    property alias view: webView
-                    Layout.fillWidth: true
-                    Layout.fillHeight: true
+                    windowProfile: root.windowProfile
+                    offTheRecord: root.windowOffTheRecord
+                    Component.onCompleted: address = tabUrl
 
-                    AddressBar {
-                        id: bar
-                        Layout.preferredHeight:30
-                        Layout.fillWidth: true
-
-                        url: webView.url
-                        offTheRecord: root.windowOffTheRecord
-
-                        onReload: webView.reload();
-                        onBack: webView.goBack();
-                        onForward: webView.goForward();
-                        onGoToAddress: webView.typedText = address;
-                    }
-
-                    WebEngineView {
-                        id: webView
-                        Layout.fillWidth: true
-                        Layout.fillHeight: true
-
-                        property string typedText: ""
-
-                        Component.onCompleted: url = tabUrl
-
-                        onUrlChanged: tabUrl = url
-                        onTitleChanged: tabTitle = title
-                        profile: root.windowProfile
-                        onTypedTextChanged: webView.url = URL.construct(typedText)
-                        onLoadingChanged: function(loadRequest) {
-                            Loading.process(loadRequest)
-                        }
-                    }
-
-                    Action {
-                        shortcut: "Escape"
-                        onTriggered: {
-                            console.log("Unfocus Address Field");
-                            bar.unfocusAddressField()
-                        }
-                    }
-
-                    Action {
-                        shortcut: "F8"
-                        onTriggered: {
-                            console.log("Focus Address Field");
-                            bar.focusAddressField();
-                        }
-                    }
+                    onTitleChanged: tabTitle = page.title
+                    onAddressChanged: tabUrl = page.address
                 }
             }
         }
