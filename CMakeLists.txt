@@ -1,5 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
-
-find_package(Qt5 COMPONENTS WebEngine Widgets Qml Quick REQUIRED)
-
+project(tsteeper)
+set(PROJECT "tsteeper")
 add_subdirectory(src)
