@@ -1,6 +1,4 @@
 cmake_minimum_required(VERSION 3.10)
-project(tsteeper)
-set(PROJECT "tsteeper")
 
 set(CMAKE_CXX_STANDARD 17)
 
@@ -10,9 +8,9 @@ set(CMAKE_AUTOUIC ON)
 
 include(${CMAKE_SOURCE_DIR}/conan.cmake)
 conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
-if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
-    file(COPY ${CMAKE_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/bin/)
-endif()
+#if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
+#    file(COPY ${CMAKE_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/bin/)
+#endif()
 
 find_package(Qt5 COMPONENTS WebEngine Widgets Qml Quick REQUIRED)
 find_package(Qt5Test REQUIRED)
