@@ -8,6 +8,15 @@ set(CMAKE_INCLUDE_CURRENT_DIR ON)
 set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 
+include(${CMAKE_SOURCE_DIR}/conan.cmake)
+conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
+    file(COPY ${CMAKE_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/bin/)
+endif()
+
+find_package(Qt5 COMPONENTS WebEngine Widgets Qml Quick REQUIRED)
+find_package(Qt5Test REQUIRED)
+
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
