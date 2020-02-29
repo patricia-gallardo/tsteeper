@@ -20,6 +20,11 @@ $ conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public
 $ conan install .. -s arch=x86_64 -s build_type=Debug -s compiler="Visual Studio" -s compiler.version=16 -s compiler.runtime=MDd -g=cmake --build=missing
 ~~~~
 
+Developer Command Prompt for VS 2019
+~~~~
+SET CONAN_USER_HOME=c:\Code
+~~~~
+
 Linux
 ~~~~
 $ sudo pip3 install conan --upgrade
