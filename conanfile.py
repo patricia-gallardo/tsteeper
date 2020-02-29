@@ -59,7 +59,7 @@ class HeapHistoryViewer(ConanFile):
        "qt:qtwebsockets": True,
        "qt:qtwebchannel": True,
        "qt:qtwebengine": True,
-       "qt:qtcanvas3d": False,
+       # "qt:qtcanvas3d": False,
        "qt:qtwebview": False,
        "qt:qtquickcontrols2": True,
        "qt:qtpurchasing": False,
@@ -81,7 +81,7 @@ class HeapHistoryViewer(ConanFile):
             self.output.info("To use the Qt from your system, set the CMAKE_PREFIX_PATH env var")
             self.output.info("Trying to get Qt from Conan")
             self.output.info("If it fails try: 'conan remote add bincrafters \"https://api.bintray.com/conan/bincrafters/public-conan\"'")
-            self.requires("qt/5.12.6@bincrafters/stable")
+            self.requires("qt/5.14.1@bincrafters/stable")
         else:
             self.output.info("Getting Qt from the system. CMAKE_PREFIX_PATH = " + platform_qt)
         self.requires("gflags/2.2.2")
