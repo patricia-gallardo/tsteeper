@@ -265,3 +265,51 @@ Call Stack (most recent call first):
 See also "/Code/tsteeper/cmake-build-debug/CMakeFiles/CMakeOutput.log".
 
 [Failed to reload]
+
+
+---------------------------------------------------
+
+Windows (problems with the bison paths?)
+
+[3383/27578] STAMP obj/third_party/blink/renderer/bindings/global_constructors_idls.stamp
+[3384/27578] CC obj/third_party/boringssl/boringssl/cmac.obj
+[3385/27578] STAMP obj/third_party/blink/renderer/core/make_core_generated_input_mode_names.stamp
+[3386/27578] CC obj/third_party/boringssl/boringssl/check.obj
+[3387/27578] ACTION //third_party/blink/renderer/core:make_core_generated_input_type_names(//build/toolchain/win:x64)
+[3388/27578] ACTION //third_party/blink/renderer/core:make_core_generated_css_tokenizer_codepoints(//build/toolchain/win:x64)
+[3389/27578] CC obj/third_party/boringssl/boringssl/p_dsa_asn1.obj
+[3390/27578] CC obj/third_party/boringssl/boringssl/cpu-aarch64-linux.obj
+[3391/27578] CC obj/third_party/boringssl/boringssl/evp_asn1.obj
+[3392/27578] ACTION //third_party/blink/renderer/core:make_core_generated_bison(//build/toolchain/win:x64)
+FAILED: gen/third_party/blink/renderer/core/xpath_grammar.cc gen/third_party/blink/renderer/core/xpath_grammar.h
+C:\Python27\python.exe ../../../../../../c78c405cf/1/qt5/qtwebengine/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/rule_bison.py ../../../../../../c78c405cf/1/qt5/qtwebengine/src/3rdparty/chrom
+ium/third_party/blink/renderer/core/xml/xpath_grammar.y gen/third_party/blink/renderer/core bison.exe
+bison: cannot open `c:\Code\.conan\data\bison_installer\3.3.2\bincrafters\stable\package\89223f1fa44ade7212e9a594be393c58ebc5f958\share\bison/bison.m4': No such file or directory
+bison: cannot open `c:\Code\.conan\data\bison_installer\3.3.2\bincrafters\stable\package\89223f1fa44ade7212e9a594be393c58ebc5f958\share\bison/c-skel.m4': No such file or directory
+bison: m4 failed
+Traceback (most recent call last):
+  File "../../../../../../c78c405cf/1/qt5/qtwebengine/src/3rdparty/chromium/third_party/blink/renderer/build/scripts/rule_bison.py", line 85, in <module>
+    assert returnCode == 0
+AssertionError
+[3393/27578] CC obj/third_party/boringssl/boringssl/unicode.obj
+[3394/27578] ACTION //third_party/blink/renderer/core:make_core_generated_event_target_names(//build/toolchain/win:x64)
+[3395/27578] CC obj/third_party/boringssl/boringssl/ecdsa_asn1.obj
+[3396/27578] CC obj/third_party/boringssl/boringssl/evp_ctx.obj
+[3397/27578] ACTION //third_party/blink/renderer/core:make_core_generated_html_tokenizer_names(//build/toolchain/win:x64)
+[3398/27578] ACTION //third_party/blink/renderer/core:make_core_generated_cssom_types(//build/toolchain/win:x64)
+[3399/27578] CC obj/third_party/boringssl/boringssl/cbb.obj
+[3400/27578] ACTION //third_party/blink/renderer/core:make_core_generated_css_property_names(//build/toolchain/win:x64)
+[3401/27578] ACTION //third_party/blink/renderer/core:make_core_generated_css_value_keywords(//build/toolchain/win:x64)
+ninja: build stopped: subcommand failed.
+jom: C:\.conan\6b152ea1e\1\qtwebengine\src\core\Makefile.gn_run.Debug [run_ninja] Error 1
+jom: C:\.conan\6b152ea1e\1\qtwebengine\src\core\Makefile.gn_run [debug] Error 2
+jom: C:\.conan\6b152ea1e\1\qtwebengine\src\core\Makefile [sub-gn_run-pro-make_first] Error 2
+jom: C:\.conan\6b152ea1e\1\qtwebengine\src\Makefile [sub-core-make_first] Error 2
+jom: C:\.conan\6b152ea1e\1\qtwebengine\Makefile [sub-src-make_first] Error 2
+jom: C:\.conan\6b152ea1e\1\Makefile [module-qtwebengine-make_first] Error 2
+qt/5.14.1@bincrafters/stable:
+qt/5.14.1@bincrafters/stable: ERROR: Package 'e9d91e7338982db881d524efd56e6f4ce00b0246' build failed
+qt/5.14.1@bincrafters/stable: WARN: Build folder c:\.conan\6b152ea1e\1
+ERROR: qt/5.14.1@bincrafters/stable: Error in build() method, line 662
+        self.run(make, run_environment=True)
+        ConanException: Error 2 while executing jom
