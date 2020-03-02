@@ -71,7 +71,8 @@ class HeapHistoryViewer(ConanFile):
        "qt:qtspeech": False,
        "qt:qtnetworkauth": False,
        "qt:qtremoteobjects": False,
-       "qt:qtwebglplugin": False
+       "qt:qtwebglplugin": False,
+       "fontconfig:shared": True,
     }
 
     def requirements(self):
