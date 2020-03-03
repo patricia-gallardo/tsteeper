@@ -5,7 +5,7 @@ class HeapHistoryViewer(ConanFile):
 
     settings = "os", "compiler", "build_type", "arch"
     platform_qt = os.getenv("CMAKE_PREFIX_PATH")
-    generators = "cmake", "qt" if not platform_qt else "cmake"
+    generators = "cmake", "qt", "virtualrunenv" if not platform_qt else "cmake"
     default_options = {
        "qt:shared": True,
        "qt:commercial": False,
