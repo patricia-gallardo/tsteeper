@@ -55,3 +55,5 @@ Useful environment vars
 QT_DEBUG_PLUGINS=1
 LD_DEBUG=libs
 ~~~~
+
+Works: qt/5.14.2@patricia/testing
