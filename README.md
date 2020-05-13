@@ -56,4 +56,9 @@ QT_DEBUG_PLUGINS=1
 LD_DEBUG=libs
 ~~~~
 
-Works: qt/5.14.2@patricia/testing
+Test conan-qt branch
+~~~~
+conan export /path/to/conan-qt qt/5.14.2@user/channel
+~~~~
+
+Works on Linux: qt/5.14.2@patricia/testing
