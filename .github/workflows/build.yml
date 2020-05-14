@@ -27,6 +27,7 @@ jobs:
 
     - name: Get Conan
       run: |
+        pip3 install wheel setuptools
         pip3 install conan --upgrade
         python --version
         conan --version
