@@ -19,7 +19,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_USER_HOME: "~/conan/"
+      CONAN_USER_HOME: "~/co/"
     
     steps:
     - uses: actions/checkout@v2
@@ -28,7 +28,7 @@ jobs:
       run: python --version
 
     - name: Make Conan dir
-      run: mkdir conan
+      run: mkdir co
       
     - name: Get Conan
       run: |
