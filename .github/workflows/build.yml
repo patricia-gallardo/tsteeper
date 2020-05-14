@@ -46,6 +46,7 @@ jobs:
       run: |
         echo $PATH
         ls /home/runner/.local/bin
+        echo "::add-path::/home/runner/.local/bin"
       #export PATH=$PATH:/home/runner/.local/bin
 
     - name: Check Conan
