@@ -22,7 +22,7 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_USER_HOME: "$GITHUB_WORKSPACE/conan/"
+      CONAN_USER_HOME: "~/conan/"
     
     # Steps represent a sequence of tasks that will be executed as part of the job
     steps:
