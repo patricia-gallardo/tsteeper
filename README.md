@@ -15,9 +15,11 @@ GitBash Windows
 $ pip3 install conan --upgrade
 $ python --version
 Python 2.7.17
+$ mkdir c:/Code/
 $ export CONAN_USER_HOME=c:/Code/
 $ conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
-$ conan install .. -s arch=x86_64 -s build_type=Debug -s compiler="Visual Studio" -s compiler.version=16 -s compiler.runtime=MDd -g=cmake --build=missing
+$ cd <path to tsteeper>
+$ conan install . -s arch=x86_64 -s build_type=Debug -s compiler="Visual Studio" -s compiler.version=16 -s compiler.runtime=MDd -g=cmake --build=missing
 ~~~~
 
 Developer Command Prompt for VS 2019
