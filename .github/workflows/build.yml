@@ -40,6 +40,10 @@ jobs:
       run: |
         pip3 install wheel setuptools
         pip3 install conan --upgrade
+        
+    - name: Fix Path on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: export PATH=$PATH:/home/runner/.local/bin
 
     - name: Check Conan
       run: |
