@@ -38,6 +38,10 @@ jobs:
     - name: Check Conan
       run: |
         conan --version
+
+    - name: Check CMake
+      run: |
+        cmake --version
   
     # Runs a single command using the runners shell
     - name: Run a one-line script
