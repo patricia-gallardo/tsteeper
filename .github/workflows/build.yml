@@ -10,8 +10,11 @@ jobs:
   build:
     strategy:
       fail-fast: false
+      
+      # QtWebEngine does not build in a GitHub Action on macos-latest
+      # https://bugreports.qt.io/projects/QTBUG/issues/QTBUG-83318?filter=allissues
       matrix:
-        os: [ubuntu-latest, windows-latest, macos-10.15]
+        os: [ubuntu-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
