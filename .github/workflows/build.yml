@@ -43,7 +43,10 @@ jobs:
         
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
-      run: export PATH=$PATH:/home/runner/.local/bin
+      run: |
+        echo $PATH
+        ls /home/runner/.local/bin
+      #export PATH=$PATH:/home/runner/.local/bin
 
     - name: Check Conan
       run: |
