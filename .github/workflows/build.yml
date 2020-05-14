@@ -39,6 +39,10 @@ jobs:
       run: |
         conan --version
 
+    - name: Add bincrafters remote
+      run: |
+        conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
+
     - name: Check CMake
       run: |
         cmake --version
