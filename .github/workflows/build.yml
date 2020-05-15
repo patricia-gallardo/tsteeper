@@ -49,6 +49,10 @@ jobs:
     - name: Add bincrafters remote
       if: steps.cache-conan.outputs.cache-hit != 'true'
       run: conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
+      
+    - name: Clean up Conan
+      if: steps.cache-conan.outputs.cache-hit != 'false'
+      run: conan remove -f "*" --system-reqs
 
     - name: Check CMake
       run: cmake --version
@@ -57,7 +61,7 @@ jobs:
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
-      run: conan remove -f "*" --builds --src
+      run: conan remove -f "*" --builds --src --system-reqs
   
     - name: Build
       run: cmake --build build
