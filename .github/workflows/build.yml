@@ -31,8 +31,8 @@ jobs:
         cache-name: cache-conan-modules
       with:
         path: ${{ env.CONAN_USER_HOME }}
-        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
-        restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-
+        key: ${{ runner.os }}-builder-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
+        restore-keys: ${{ runner.os }}-builder-${{ env.cache-name }}-
      
     - name: Get Conan
       run: |
