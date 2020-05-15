@@ -14,22 +14,28 @@ jobs:
       # QtWebEngine does not build in a GitHub Action on macos-latest
       # https://bugreports.qt.io/projects/QTBUG/issues/QTBUG-83318?filter=allissues
       matrix:
-        os: [ubuntu-latest, windows-latest]
+        os: [ubuntu-latest] # , windows-latest
 
     runs-on: ${{ matrix.os }}
     
     env:
       CONAN_USER_HOME: "~/co/"
-    
+
     steps:
     - uses: actions/checkout@v2
 
     - name: Check Python
       run: python --version
 
-    - name: Make Conan dir
-      run: mkdir co
-      
+    - name: Cache Conan modules
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: ${{ env.CONAN_USER_HOME }}
+        key: ${{ runner.os }}-build-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
+        restore-keys: ${{ runner.os }}-build-${{ env.cache-name }}-
+     
     - name: Get Conan
       run: |
         pip3 install wheel setuptools
