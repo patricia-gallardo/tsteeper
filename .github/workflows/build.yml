@@ -46,9 +46,9 @@ jobs:
     - name: Check Conan
       run: conan --version
 
-    - name: Add bincrafters remote
-      if: steps.cache-conan.outputs.cache-hit != 'true'
-      run: conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
+    #- name: Add bincrafters remote
+    #  if: steps.cache-conan.outputs.cache-hit != 'true'
+    #  run: conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
       
     - name: Clean up Conan
       if: steps.cache-conan.outputs.cache-hit != 'false'
