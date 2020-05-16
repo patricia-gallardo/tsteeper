@@ -21,8 +21,8 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: Check Python
-      run: python --version
+#    - name: Check Python
+#      run: python --version
 
     - name: Cache Conan modules
       id: cache-conan
@@ -43,21 +43,21 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
-    - name: Check Conan
-      run: conan --version
+#    - name: Check Conan
+#      run: conan --version
 
-    - name: Add bincrafters remote
-      if: steps.cache-conan.outputs.cache-hit != 'true'
-      run: conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
+#    - name: Add bincrafters remote
+#      if: steps.cache-conan.outputs.cache-hit != 'true'
+#      run: conan remote add bincrafters "https://api.bintray.com/conan/bincrafters/public-conan"
       
-    - name: Clean up Conan
-      if: steps.cache-conan.outputs.cache-hit == 'true'
-      run: conan remove -f "*" --system-reqs
+#    - name: Clean up Conan
+#      if: steps.cache-conan.outputs.cache-hit == 'true'
+#      run: conan remove -f "*" --system-reqs
 
-    - name: Check CMake
-      run: cmake --version
+#    - name: Check CMake
+#      run: cmake --version
         
-    - name: Configure build
+    - name: Get Conan Dependencies
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
