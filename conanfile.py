@@ -33,3 +33,4 @@ class HeapHistoryViewer(ConanFile):
     def imports(self):
         self.copy("*.dll", dst="bin", src="bin")
         self.copy("*.dylib*", dst="bin", src="lib")
+        self.copy("license*", dst="licenses", folder=True, ignore_case=True)
