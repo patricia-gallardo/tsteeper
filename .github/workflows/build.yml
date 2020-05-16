@@ -40,10 +40,6 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
-#    - name: Clean up Conan
-#      if: steps.cache-conan.outputs.cache-hit == 'true'
-#      run: conan remove -f "*" --system-reqs
-        
     - name: Get Conan Dependencies
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
 

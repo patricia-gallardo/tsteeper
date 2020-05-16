@@ -1,21 +1,22 @@
 import os
 from conans import ConanFile, CMake
 
-class HeapHistoryViewer(ConanFile):
+class ConanDependencies(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     platform_qt = os.getenv("CMAKE_PREFIX_PATH")
     generators = "cmake", "qt", "virtualrunenv" if not platform_qt else "cmake"
     default_options = {
-       "qt:with_freetype": True,
-       "qt:with_fontconfig": True,
-       "qt:qttools": True,
-       "qt:qtlocation": True,
-       "qt:qtquickcontrols": True,
-       "qt:qtwebchannel": True,
-       "qt:qtwebengine": True,
-       "qt:qtquickcontrols2": True,
-       "fontconfig:shared": True,
-       "libxscrnsaver:shared": True,
+        "qt:qtlocation": True,
+        "qt:qtquickcontrols2": True,
+        "qt:qtquickcontrols": True, # Remove ?
+        "qt:qttools": True,
+        "qt:qtsvg": True,
+        "qt:qtwebchannel": True,
+        "qt:qtwebengine": True,
+        "qt:with_fontconfig": True,
+        "qt:with_freetype": True,
+        "fontconfig:shared": True,
+        "libxscrnsaver:shared": True,
     }
 
     def requirements(self):

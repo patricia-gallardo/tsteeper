@@ -20,7 +20,7 @@ conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missin
 #    file(COPY ${CMAKE_BINARY_DIR}/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/bin/)
 #endif()
 
-find_package(Qt5 COMPONENTS WebEngine Widgets Qml Quick REQUIRED)
+find_package(Qt5 COMPONENTS Core Gui Qml Quick Svg WebEngine Widgets Xml REQUIRED)
 find_package(Qt5Test REQUIRED)
 
 include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
@@ -42,7 +42,11 @@ source_group("Source Files" FILES ${SOURCES})
 add_executable(${PROJECT} ${HEADERS} ${SOURCES} ${QT_RESOURCES})
 
 target_link_libraries(${PROJECT}
+        Qt5::Core
+        Qt5::Gui
+        Qt5::Qml
+        Qt5::Quick
+        Qt5::Svg
         Qt5::WebEngine
         Qt5::Widgets
-        Qt5::Qml
-        Qt5::Quick)
+        Qt5::Xml)
