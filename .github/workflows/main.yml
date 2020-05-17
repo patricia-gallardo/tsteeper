@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [ master ]
+  pull_request:
+    branches: [ master ]
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest] # Takes too long: windows-latest
+
+    runs-on: ${{ matrix.os }}
+    
+    env:
+      CONAN_USER_HOME: "~/co/"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Cache Conan modules
+      id: cache-conan
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: ${{ env.CONAN_USER_HOME }}
+        key: ${{ runner.os }}-builder-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
+        restore-keys: ${{ runner.os }}-builder-${{ env.cache-name }}-
+     
+    - name: Get Conan
+      run: |
+        pip3 install wheel setuptools
+        pip3 install conan --upgrade
+        
+    - name: Fix Path on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: echo "::add-path::/home/runner/.local/bin"
+
+    - name: Get Conan Dependencies
+      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Clean up Conan
+      run: conan remove -f "*" --builds --src --system-reqs
+  
+    - name: Build
+      run: cmake --build build
