@@ -8,7 +8,6 @@ class ConanDependencies(ConanFile):
     default_options = {
         "qt:qtlocation": True,
         "qt:qtquickcontrols2": True,
-        "qt:qtquickcontrols": True, # Remove ?
         "qt:qttools": True,
         "qt:qtsvg": True,
         "qt:qtwebchannel": True,
