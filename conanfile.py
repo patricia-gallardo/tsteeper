@@ -8,11 +8,11 @@ class ConanDependencies(ConanFile):
     default_options = {
         "qt:qtlocation": True,
         "qt:qtquickcontrols2": True,
-        "qt:qtquickcontrols": True,
         "qt:qttools": True,
         "qt:qtsvg": True,
         "qt:qtwebchannel": True,
         "qt:qtwebengine": True,
+        "qt:qtwebview": True,
         "qt:with_fontconfig": True,
         "qt:with_freetype": True,
         "fontconfig:shared": True,
