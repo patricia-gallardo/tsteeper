@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest] # Takes too long: windows-latest
+        os: [macos-latest] #[ubuntu-latest, macos-latest] # Takes too long: windows-latest
 
     runs-on: ${{ matrix.os }}
     
