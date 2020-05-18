@@ -30,6 +30,17 @@ jobs:
         path: ${{ env.CONAN_USER_HOME }}
         key: ${{ runner.os }}-builder-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
         restore-keys: ${{ runner.os }}-builder-${{ env.cache-name }}-
+
+    - name: New Cache Conan modules
+      if: matrix.os == 'ubuntu-latest'
+      id: new-cache-conan
+      uses: turtlebrowser/conan-cache@master
+      env:
+        cache-name: turtlebrowser/conan-cache-linux
+      with:
+        path: ${{ env.CONAN_USER_HOME }}
+        key: ${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+        fallback: ${{ runner.os }}
      
     - name: Get Conan
       run: |
