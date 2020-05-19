@@ -61,7 +61,10 @@ jobs:
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
-      run: conan remove -f "*" --builds --src --system-reqs
+      run: |
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs
   
     - name: Build
       run: cmake --build build
