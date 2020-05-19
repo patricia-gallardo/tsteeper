@@ -45,8 +45,8 @@ jobs:
         key: ${{ runner.os }}-builder-${{ env.cache-name }}-${{ hashFiles('conanfile.py') }}
         restore-keys: ${{ runner.os }}-builder-${{ env.cache-name }}-
 
-    - name: Check size
-      run: du -h -d1 ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.14.2/bincrafters/stable
+#    - name: Check size
+#      run: du -h -d1 ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.14.2/bincrafters/stable
            
     - name: Get Conan
       run: |
@@ -66,8 +66,8 @@ jobs:
         conan remove -f "*" --src
         conan remove -f "*" --system-reqs
 
-    - name: Check size
-      run: du -h -d1 ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.14.2/bincrafters/stable
+#    - name: Check size
+#      run: du -h -d1 ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.14.2/bincrafters/stable
   
     - name: Build
       run: cmake --build build
