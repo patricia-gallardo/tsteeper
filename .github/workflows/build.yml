@@ -3,8 +3,8 @@ name: CI
 on:
   push:
     branches: [ master ]
-  pull_request:
-    branches: [ master ]
+#  pull_request:
+#    branches: [ master ]
 
 jobs:
   build:
@@ -25,13 +25,16 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       id: new-cache-conan
       uses: turtlebrowser/conan-cache@master
-      env:
-        cache-name: turtlebrowser/conan-cache-linux
       with:
-        path: ${{ env.CONAN_USER_HOME }}
-        key: ${{ runner.os }}-${{ hashFiles('conanfile.py') }}
-        fallback: ${{ runner.os }}
+          bot_name: turtlebrowser-bot
+          bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
+          cache_name: turtlebrowser/conan-cache-linux
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}
 
+    - name: Set CONAN_USER_HOME ownership to current user
+      run: sudo chown -R $(id -u):$(id -g) ${{ env.CONAN_USER_HOME }}
+      
     - name: Cache Conan modules
       id: cache-conan
       uses: actions/cache@v1
