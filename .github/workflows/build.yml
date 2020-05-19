@@ -65,6 +65,9 @@ jobs:
         conan remove -f "*" --builds
         conan remove -f "*" --src
         conan remove -f "*" --system-reqs
+
+    - name: Check size
+      run: du -h -d1 ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.14.2/bincrafters/stable
   
     - name: Build
       run: cmake --build build
