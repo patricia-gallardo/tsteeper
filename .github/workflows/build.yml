@@ -37,6 +37,7 @@ jobs:
       run: sudo chown -R $(id -u):$(id -g) ${{ env.CONAN_USER_HOME }}
 
     - name: Cache Conan modules
+      if: matrix.os == 'macos-latest'
       id: cache-conan
       uses: actions/cache@v1
       env:
