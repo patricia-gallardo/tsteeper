@@ -21,7 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    - name: New Cache Conan modules
+    - name: Docker Cache Conan modules
       if: matrix.os == 'ubuntu-latest'
       id: new-cache-conan
       uses: turtlebrowser/conan-cache-docker@master
@@ -36,7 +36,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: sudo chown -R $(id -u):$(id -g) ${{ env.CONAN_USER_HOME }}
 
-    - name: Cache Conan modules
+    - name: GitHub Cache Conan modules
       if: matrix.os == 'macos-latest'
       id: cache-conan
       uses: actions/cache@v1
