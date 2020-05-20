@@ -21,6 +21,7 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
+    # Docker Actions only work on Linux
     - name: Docker Cache Conan modules
       if: matrix.os == 'ubuntu-latest'
       id: new-cache-conan
