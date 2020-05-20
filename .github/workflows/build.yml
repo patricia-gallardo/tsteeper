@@ -22,7 +22,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: New Cache Conan modules
-      #if: matrix.os == 'ubuntu-latest'
+      if: matrix.os == 'ubuntu-latest'
       id: new-cache-conan
       uses: turtlebrowser/conan-cache@master
       with:
