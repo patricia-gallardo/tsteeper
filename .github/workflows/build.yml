@@ -23,20 +23,14 @@ jobs:
 
     # Docker Actions only work on Linux
     - name: Docker Cache Conan modules
-      if: matrix.os == 'ubuntu-latest'
       id: new-cache-conan
       uses: turtlebrowser/conan-cache-docker@master
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
-          cache_name: turtlebrowser/conan-cache
+          cache_name: turtlebrowser/conan-cache-turtlebrowser
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}
-
-    # Fix the ownership of the Docker cache
-    - name: Set CONAN_USER_HOME ownership to current user
-      if: matrix.os == 'ubuntu-latest'
-      run: sudo chown -R $(id -u):$(id -g) ${{ env.CONAN_USER_HOME }}
 
     - name: GitHub Cache Conan modules
       if: matrix.os == 'macos-latest'
