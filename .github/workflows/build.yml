@@ -33,7 +33,7 @@ jobs:
           target_os: ${{ runner.os }}
 
     - name: GitHub Cache Conan modules
-      if: matrix.os == 'macos-latest'
+      if: matrix.os == 'windows-latest'
       id: cache-conan
       uses: actions/cache@v1
       env:
