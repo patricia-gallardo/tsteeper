@@ -21,10 +21,9 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Docker Actions only work on Linux
     - name: Docker Cache Conan modules
       id: new-cache-conan
-      uses: turtlebrowser/conan-cache-docker@master
+      uses: turtlebrowser/conan-cache@master
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
