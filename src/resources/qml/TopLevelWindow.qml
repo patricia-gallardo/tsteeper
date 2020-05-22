@@ -34,7 +34,7 @@ Window {
         return current ? current.tabTitle + " - " : "";
     }
 
-    title: getTitle(tabBar.currentIndex) + "tSteeper";
+    title: getTitle(tabBar.currentIndex) + "TurtleBrowser";
 
     ListModel {
         id: tabModel
