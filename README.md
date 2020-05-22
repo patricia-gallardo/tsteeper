@@ -1,6 +1,6 @@
-# tsteeper
+# TurtleBrowser
 
-Using Qt and Chromium comes with a wide range of licences that all have to be taken into account. Not exactly sure what that means for tSteeper yet.
+Using Qt and Chromium comes with a wide range of licences that all have to be taken into account. Not exactly sure what that means for TurtleBrowser yet.
 
 # Using conan install
 
@@ -17,7 +17,7 @@ $ python --version
 Python 2.7.17
 $ mkdir c:/Code/
 $ export CONAN_USER_HOME=c:/Code/
-$ cd <path to tsteeper>
+$ cd <path to TurtleBrowser>
 $ conan install . -s arch=x86_64 -s build_type=Debug -s compiler="Visual Studio" -s compiler.version=16 -s compiler.runtime=MDd -g=cmake --build=missing
 ~~~~
 
