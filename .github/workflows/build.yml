@@ -17,7 +17,7 @@ jobs:
     
     env:
       CONAN_USER_HOME: "${{ github.workspace }}/conan/"
-      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan/"
+      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan/short"
 
     steps:
     - uses: actions/checkout@v2
