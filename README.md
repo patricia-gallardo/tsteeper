@@ -45,7 +45,7 @@ On Windows, Linux, and macOS, Qt WebView depends on the Qt WebEngine module to r
 ~~~~
 [https://doc.qt.io/qt-5/qtwebview-index.html]
 
-Might be needed
+## Might be needed
 ~~~~
 sudo apt-get install libxcb-xinput0
 ~~~~
