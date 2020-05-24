@@ -26,7 +26,7 @@ Developer Command Prompt for VS 2019
 SET CONAN_USER_HOME=c:\Code
 ~~~~
 
-Linux
+# Linux
 ~~~~
 $ sudo pip3 install conan --upgrade
 $ python --version
