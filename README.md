@@ -60,5 +60,3 @@ Test conan-qt branch
 ~~~~
 conan export /path/to/conan-qt qt/5.14.2@user/channel
 ~~~~
-
-Works on Linux: qt/5.14.2@patricia/testing
