@@ -50,7 +50,7 @@ Might be needed
 sudo apt-get install libxcb-xinput0
 ~~~~
 
-Useful environment vars
+## Useful environment vars
 ~~~~
 QT_DEBUG_PLUGINS=1
 LD_DEBUG=libs
