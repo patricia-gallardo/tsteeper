@@ -10,7 +10,7 @@ Using Qt and Chromium comes with a wide range of licences that all have to be ta
     [https://docs.conan.io/en/latest/mastering/custom_cache.html]
 * git config --system core.longpaths true (probably not needed)
 
-GitBash Windows
+# GitBash Windows
 ~~~~
 $ pip3 install conan --upgrade
 $ python --version
