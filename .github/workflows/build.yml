@@ -16,8 +16,8 @@ jobs:
     runs-on: ${{ matrix.os }}
     
     env:
-      CONAN_USER_HOME: "${{ github.workspace }}/conan/"
-      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/conan/short"
+      CONAN_USER_HOME: "${{ github.workspace }}/release/"
+      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
 
     steps:
     - uses: actions/checkout@v2
