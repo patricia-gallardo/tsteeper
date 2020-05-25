@@ -11,7 +11,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macos-latest, windows-latest] # [ubuntu-latest, macos-latest, windows-latest]
+        os: [ubuntu-latest, macos-latest] # [ubuntu-latest, macos-latest, windows-latest]
 
     runs-on: ${{ matrix.os }}
     
@@ -28,7 +28,7 @@ jobs:
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
-          cache_name: turtlebrowser/conan-cache-turtlebrowser
+          cache_name: turtlebrowser/conan-cache-turtlebrowser2
           key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}
           lfs_limit: 60
