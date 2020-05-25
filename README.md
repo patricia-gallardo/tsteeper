@@ -1,5 +1,7 @@
 # TurtleBrowser
 
+![CI](https://github.com/turtlebrowser/turtlebrowser/workflows/CI/badge.svg?branch=master)
+
 Using Qt and Chromium comes with a wide range of licences that all have to be taken into account. Not exactly sure what that means for TurtleBrowser yet.
 
 # Using conan install
