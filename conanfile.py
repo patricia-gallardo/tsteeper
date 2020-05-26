@@ -16,7 +16,6 @@ class ConanDependencies(ConanFile):
         "qt:qtwebview": True,
         "qt:with_fontconfig": True,
         "qt:with_freetype": True,
-        "qt:with_zstd": False,
         "fontconfig:shared": True,
         "libxscrnsaver:shared": True,
     }
