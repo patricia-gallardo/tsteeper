@@ -42,7 +42,7 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: |
         echo "::add-path::/home/runner/.local/bin"
-        sudo apt install zstd
+        zstd --version
 
     - name: Get Conan Dependencies
       run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
