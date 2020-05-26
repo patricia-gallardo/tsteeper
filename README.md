@@ -48,8 +48,8 @@ On Windows, Linux, and macOS, Qt WebView depends on the Qt WebEngine module to r
   both private and public ones using WebEngineProfile
 - _TopLevelWindow.qml_ represents a browser window and has a column layout with a tab-toolbar
   (_TabToolbar.qml_) and a StackLayout of web pages (_WebPage.qml_), it also handles all global keyboard shortcuts
-- TabToolbar.qml has a RowLayout with a tab-bar followed by a new tab button
-- WebPage.qml has a ColumnLayout of the address-bar followed by the WebEngineView/WebView, it handles some tab specific keyboard shortcuts
+- _TabToolbar.qml_ has a RowLayout with a tab-bar followed by a new tab button
+- _WebPage.qml_ has a ColumnLayout of the address-bar followed by the WebEngineView/WebView, it handles some tab specific keyboard shortcuts
 
 # Licences
 
