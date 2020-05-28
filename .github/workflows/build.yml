@@ -1,4 +1,4 @@
-name: CI
+name: CI-Release
 
 on:
   push:
@@ -23,7 +23,7 @@ jobs:
     - uses: actions/checkout@v2
 
     - name: Cache Conan modules
-      id: new-cache-conan
+      id: cache-conan
       uses: turtlebrowser/conan-cache@master
       with:
           bot_name: turtlebrowser-bot
