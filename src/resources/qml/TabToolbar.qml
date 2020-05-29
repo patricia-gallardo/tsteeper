@@ -1,6 +1,8 @@
-import QtQuick 2.11
+import QtQuick 2.12
+import QtQuick.Shapes 1.12
 import QtQuick.Controls 2.4
-import QtQuick.Layouts 1.0
+import QtQuick.Layouts 1.3
+import QtQuick.Window 2.3
 
 import "theme.js" as Theme
 import "addresses.js" as Addesses
@@ -14,6 +16,9 @@ RowLayout {
     property bool offTheRecord: false
     property alias currentIndex: tabs.currentIndex
     property alias model: tabsRepeater.model
+
+    property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
+    property string buttonHightlightColor: root.offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
 
     function makeNewTab()  {
         console.log("Make new tab");
@@ -36,6 +41,20 @@ RowLayout {
 
     TabBar {
         id: tabs
+
+        TapHandler {
+            onTapped: if (tapCount === 2)
+                          toggleMaximized()
+            gesturePolicy: TapHandler.DragThreshold
+        }
+
+        DragHandler {
+            grabPermissions: TapHandler.CanTakeOverFromAnything
+            onActiveChanged: {
+                if (active)
+                    window.startSystemMove()
+            }
+        }
 
         Repeater {
             id: tabsRepeater
@@ -78,8 +97,7 @@ RowLayout {
                         icon.name: qsTr("Close Tab")
 
                         background: Rectangle {
-                            property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
-                            color: tab.hovered ? buttonColor : "transparent"
+                            color: tab.hovered ? root.buttonColor : "transparent"
                             border.color: tabBackground.color
                             border.width: tab.hovered && closeTab.hovered ? (closeTab.down? 1 : 0) : 1
                             radius: 2
@@ -108,12 +126,114 @@ RowLayout {
         onClicked: makeNewTab();
 
         background: Rectangle {
-            property string buttonColor: root.offTheRecord ? Theme.offTheRecordColor : Theme.addressBarColor
-            property string buttonHightlightColor: root.offTheRecord ? Theme.offTheRecordHightlight : Theme.addressBarHighlight
-            color: newTab.hovered ? buttonHightlightColor : buttonColor
+            color: newTab.hovered ? root.buttonHightlightColor : root.buttonColor
             border.color: Theme.tabBarBackground
             border.width: newTab.hovered ? 0 : 1
             radius: 2
+        }
+    }
+
+    Rectangle {
+        id: barSpacer
+        Layout.fillWidth: true
+        Layout.preferredHeight: root.height
+        color: "transparent"
+        MouseArea {
+            anchors.fill: parent
+
+            property point pressedPosition
+            property bool isMovable: !(window.visibility === Window.Maximized)
+
+            onDoubleClicked: toggleMaximized()
+
+            onPressed: {
+                if (isMovable) {
+                    pressedPosition = Qt.point(mouse.x, mouse.y)
+                }
+            }
+
+            onPositionChanged: {
+                if (isMovable) {
+                    var delta = Qt.point(mouse.x - pressedPosition.x,
+                                         mouse.y - pressedPosition.y)
+                    window.x += delta.x
+                    window.y += delta.y
+                }
+            }
+        }
+    }
+
+    Button {
+        id: minimizeWindow
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: Theme.minimizeIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: qsTr("Minimize Window")
+
+        onClicked: window.showMinimized()
+
+        background: Rectangle {
+            color: minimizeWindow.hovered ? root.buttonHightlightColor : "transparent"
+            radius: 0
+        }
+    }
+
+    Button {
+        id: restoreToggleWindow
+
+        property bool isMaximized: (window.visibility === Window.Maximized)
+
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: isMaximized ? Theme.restoreIcon : Theme.maximizeIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: isMaximized ? qsTr("Restore Window") : qsTr(
+                                     "Maximize Window")
+
+        onClicked: window.toggleMaximized()
+
+        background: Rectangle {
+            color: restoreToggleWindow.hovered ? root.buttonHightlightColor : "transparent"
+            radius: 0
+        }
+    }
+
+    Button {
+        id: closeWindow
+
+        Layout.preferredHeight: root.height
+        Layout.preferredWidth: root.height
+
+        display: AbstractButton.IconOnly
+        spacing: 0
+        padding: 2
+
+        icon.source: Theme.closeTabIcon
+        icon.color: Theme.textColor
+        icon.height: 30
+        icon.width: 30
+        icon.name: qsTr("Close Window")
+
+        onClicked: window.close()
+
+        background: Rectangle {
+            color: closeWindow.hovered ? "#F44336" : "transparent"
+            radius: 0
         }
     }
 }
