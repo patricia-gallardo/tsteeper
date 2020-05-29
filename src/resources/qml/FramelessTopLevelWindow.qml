@@ -35,7 +35,6 @@ Window {
         cursorShape: {
             const p = Qt.point(mouseX, mouseY)
             const b = root.windowMargin + 10
-            // Increase the corner size slightly
             if (p.x < b && p.y < b)
                 return Qt.SizeFDiagCursor
             if (p.x >= width - b && p.y >= height - b)
@@ -60,18 +59,17 @@ Window {
             if (active) {
                 const p = resizeHandler.centroid.position
                 const b = root.windowMargin + 10
-                // Increase the corner size slightly
                 let e = 0
-                if (p.x < b) {
+                if (p.x / window.width < 0.10) {
                     e |= Qt.LeftEdge
                 }
-                if (p.x >= width - b) {
+                if (p.x / window.width > 0.90) {
                     e |= Qt.RightEdge
                 }
-                if (p.y < b) {
+                if (p.y / window.height < 0.10) {
                     e |= Qt.TopEdge
                 }
-                if (p.y >= height - b) {
+                if (p.y / window.height > 0.90) {
                     e |= Qt.BottomEdge
                 }
                 root.startSystemResize(e)
