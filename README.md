@@ -1,6 +1,7 @@
 # TurtleBrowser
 
-![CI](https://github.com/turtlebrowser/turtlebrowser/workflows/CI/badge.svg?branch=master)
+![CI-Release](https://github.com/turtlebrowser/turtlebrowser/workflows/CI-Release/badge.svg)
+![CI-Debug](https://github.com/turtlebrowser/turtlebrowser/workflows/CI-Debug/badge.svg)
 
 # Introduction
 
