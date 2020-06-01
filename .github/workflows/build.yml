@@ -19,7 +19,6 @@ jobs:
       CONAN_USER_HOME: "${{ github.workspace }}/release/"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
       INSTALL_DIR: ${{ github.workspace }}/install/
-      BUILD_DIR: build
 
     steps:
     - uses: actions/checkout@v2
@@ -39,6 +38,7 @@ jobs:
       run: |
         pip3 install wheel setuptools
         pip3 install conan --upgrade
+        mkdir build
         
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
