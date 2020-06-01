@@ -17,6 +17,7 @@ include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
 conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
 
+# For running locally in CLion
 if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
     file(COPY ${CMAKE_BINARY_DIR}/src/qt.conf DESTINATION ${CMAKE_BINARY_DIR}/src/bin/)
 endif()
@@ -51,3 +52,7 @@ target_link_libraries(${PROJECT}
         Qt5::WebEngine
         Qt5::Widgets
         Qt5::Xml)
+
+# Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin on Windows
+INSTALL(TARGETS ${PROJECT} BUNDLE DESTINATION . COMPONENT Runtime RUNTIME DESTINATION bin COMPONENT Runtime)
+# Run <QT_BIN_PATH>/windeployqt.exe --qmldir <PATH_TO_CHECKOUT>/turtlebrowser/src/resources/qml/ --dir <CMAKE_INSTALL_PREFIX>/bin <CMAKE_INSTALL_PREFIX>/bin/TurtleBrowser.exe
