@@ -56,4 +56,4 @@ jobs:
       run: cmake --build build
 
     - name: Install
-      run: cmake --target install
+      run: mkdir ${{ env.CMAKE_INSTALL_PREFIX }} && cmake --target install
