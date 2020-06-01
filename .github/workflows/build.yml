@@ -70,7 +70,7 @@ jobs:
       if: matrix.os == 'windows-latest'
       working-directory: ${{ env.INSTALL_DIR }}/bin/
       run: |
-        source ~/build/src/activate_run.sh
+        ${{ github.workspace }}/build/src/activate_run.ps1
         windeployqt.exe --qmldir ${{ github.workspace }}/src/resources/qml/ TurtleBrowser.exe
 #      run: ${{ env.CONAN_USER_HOME_SHORT }}/9ba5e1/1/bin/windeployqt.exe --qmldir ${{ github.workspace }}/src/resources/qml/ TurtleBrowser.exe
 
@@ -78,7 +78,7 @@ jobs:
       if: matrix.os == 'macos-latest'
       working-directory: ${{ env.INSTALL_DIR }}
       run: |
-        source ~/build/src/activate_run.sh
+        source ${{ github.workspace }}/build/src/activate_run.sh
         macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
 #      run: ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.15.0/bincrafters/stable/package/08da0b7d1da6e486a4c4729cc3b9c4e72efee391/bin/macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
 
