@@ -3,8 +3,8 @@ name: CI-Release
 on:
   push:
     branches: [ master ]
-#  pull_request:
-#    branches: [ master ]
+  pull_request:
+    branches: [ master ]
 
 jobs:
   build:
@@ -61,10 +61,6 @@ jobs:
     - name: Install
       working-directory: build
       run: cmake --build . --config Release --target install
-
-#    - name: Conan virtualrunenv
-#      working-directory: build
-#      run: source src/activate_run.sh
 
     - name: windeployqt
       if: matrix.os == 'windows-latest'
