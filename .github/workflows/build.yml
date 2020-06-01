@@ -45,11 +45,8 @@ jobs:
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Get Conan Dependencies
-      run: |
-        mkdir ${{ env.BUILD_DIR }}
-        mkdir ${{ env.INSTALL_DIR }}
-        cd ${{ env.BUILD_DIR }}
-        cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
+      working-directory: build
+      run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
       run: |
@@ -57,5 +54,10 @@ jobs:
         conan remove -f "*" --src
         conan remove -f "*" --system-reqs
 
-    - name: Build and install
-      run: cmake --build build --target install --
+    - name: Build
+      working-directory: build
+      run: cmake --build . --config Release -j 4
+
+    - name: Install
+      working-directory: build
+      run: cmake --build . --config Release --target install
