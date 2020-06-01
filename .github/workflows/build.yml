@@ -72,7 +72,6 @@ jobs:
       run: |
         ${{ github.workspace }}/build/src/activate_run.ps1
         windeployqt.exe --qmldir ${{ github.workspace }}/src/resources/qml/ TurtleBrowser.exe
-#      run: ${{ env.CONAN_USER_HOME_SHORT }}/9ba5e1/1/bin/windeployqt.exe --qmldir ${{ github.workspace }}/src/resources/qml/ TurtleBrowser.exe
 
     - name: macdeployqt
       if: matrix.os == 'macos-latest'
@@ -80,7 +79,6 @@ jobs:
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
         macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
-#      run: ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.15.0/bincrafters/stable/package/08da0b7d1da6e486a4c4729cc3b9c4e72efee391/bin/macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
