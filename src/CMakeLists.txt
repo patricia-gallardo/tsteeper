@@ -41,7 +41,12 @@ endif()
 
 source_group("Header Files" FILES ${HEADERS})
 source_group("Source Files" FILES ${SOURCES})
-add_executable(${PROJECT} ${HEADERS} ${SOURCES} ${QT_RESOURCES})
+
+if(APPLE)
+    add_executable(${PROJECT} MACOSX_BUNDLE ${HEADERS} ${SOURCES} ${QT_RESOURCES})
+else()
+    add_executable(${PROJECT} ${HEADERS} ${SOURCES} ${QT_RESOURCES})
+endif()
 
 target_link_libraries(${PROJECT}
         Qt5::Core
@@ -54,5 +59,7 @@ target_link_libraries(${PROJECT}
         Qt5::Xml)
 
 # Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin on Windows
-INSTALL(TARGETS ${PROJECT} BUNDLE DESTINATION . COMPONENT Runtime RUNTIME DESTINATION bin COMPONENT Runtime)
+INSTALL(TARGETS ${PROJECT}
+        BUNDLE DESTINATION . COMPONENT Runtime
+        RUNTIME DESTINATION bin COMPONENT Runtime)
 # Run <QT_BIN_PATH>/windeployqt.exe --qmldir <PATH_TO_CHECKOUT>/turtlebrowser/src/resources/qml/ --dir <CMAKE_INSTALL_PREFIX>/bin <CMAKE_INSTALL_PREFIX>/bin/TurtleBrowser.exe
