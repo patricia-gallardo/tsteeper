@@ -70,7 +70,7 @@ jobs:
     - name: macdeployqt
       if: matrix.os == 'macos-latest'
       working-directory: ${{ env.CONAN_USER_HOME }}/.conan/data/qt/5.15.0/bincrafters/stable/package/08da0b7d1da6e486a4c4729cc3b9c4e72efee391/bin
-      run: ./macdeployqt ${{ env.INSTALL_DIR }}/bin/TurtleBrowser.app -dmg --qmldir=${{ github.workspace }}/src/resources/qml/ --dir=${{ env.INSTALL_DIR }}/bin/ 
+      run: ./macdeployqt ${{ env.INSTALL_DIR }}/bin/TurtleBrowser -dmg --qmldir=${{ github.workspace }}/src/resources/qml/ --dir=${{ env.INSTALL_DIR }}/bin/ 
 
     - name: Upload artifact
       if: matrix.os == 'windows-latest'
