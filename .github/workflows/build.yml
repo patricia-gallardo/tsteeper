@@ -52,8 +52,7 @@ jobs:
         conan remove -f "*" --src
         conan remove -f "*" --system-reqs
 
-    - name: Build
-      run: cmake --build build
-
-    - name: Install
-      run: mkdir ${{ env.CMAKE_INSTALL_PREFIX }} && cmake --install
+    - name: Build and install
+      run: |
+        mkdir ${{ env.CMAKE_INSTALL_PREFIX }}
+        cmake --build build --target install --
