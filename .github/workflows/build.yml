@@ -18,7 +18,8 @@ jobs:
     env:
       CONAN_USER_HOME: "${{ github.workspace }}/release/"
       CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
-      CMAKE_INSTALL_PREFIX: "${{ github.workspace }}/install/"
+      INSTALL_DIR: ${{ github.workspace }}/install/
+      BUILD_DIR: build
 
     steps:
     - uses: actions/checkout@v2
@@ -44,7 +45,11 @@ jobs:
       run: echo "::add-path::/home/runner/.local/bin"
 
     - name: Get Conan Dependencies
-      run: mkdir build && cd build && cmake -DCMAKE_BUILD_TYPE=Release ..
+      run: |
+        mkdir ${{ env.BUILD_DIR }}
+        mkdir ${{ env.INSTALL_DIR }}
+        cd ${{ env.BUILD_DIR }}
+        cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
       run: |
@@ -53,6 +58,4 @@ jobs:
         conan remove -f "*" --system-reqs
 
     - name: Build and install
-      run: |
-        mkdir ${{ env.CMAKE_INSTALL_PREFIX }}
-        cmake --build build --target install --
+      run: cmake --build build --target install --
