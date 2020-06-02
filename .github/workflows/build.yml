@@ -35,7 +35,7 @@ jobs:
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
-      if: ${{ env.cache-hit != 'true' }}
+      if: steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
       uses: turtlebrowser/conan-cache@master
       with:
