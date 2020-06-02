@@ -58,8 +58,13 @@ target_link_libraries(${PROJECT}
         Qt5::Widgets
         Qt5::Xml)
 
-# Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin on Windows
-INSTALL(TARGETS ${PROJECT}
-        BUNDLE DESTINATION . COMPONENT Runtime
-        RUNTIME DESTINATION bin COMPONENT Runtime)
-# Run <QT_BIN_PATH>/windeployqt.exe --qmldir <PATH_TO_CHECKOUT>/turtlebrowser/src/resources/qml/ --dir <CMAKE_INSTALL_PREFIX>/bin <CMAKE_INSTALL_PREFIX>/bin/TurtleBrowser.exe
+if (${CMAKE_SYSTEM_NAME} STREQUAL "Linux")
+    # Linux : Installs TurtleBrowser to CMAKE_INSTALL_PREFIX/bin
+    install(TARGETS ${PROJECT} RUNTIME DESTINATION bin COMPONENT Runtime)
+else ()
+    # Windows : Installs TurtleBrowser.exe to CMAKE_INSTALL_PREFIX/bin
+    # Mac     : Installs TurtleBrowser.app to CMAKE_INSTALL_PREFIX/
+    INSTALL(TARGETS ${PROJECT}
+            BUNDLE DESTINATION . COMPONENT Runtime
+            RUNTIME DESTINATION bin COMPONENT Runtime)
+endif ()
