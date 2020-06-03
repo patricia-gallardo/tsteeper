@@ -68,3 +68,5 @@ else ()
             BUNDLE DESTINATION . COMPONENT Runtime
             RUNTIME DESTINATION bin COMPONENT Runtime)
 endif ()
+
+install(DIRECTORY ${CMAKE_BINARY_DIR}/src/licenses DESTINATION .)
