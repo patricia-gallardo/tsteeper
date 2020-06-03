@@ -64,7 +64,7 @@ jobs:
     - name: Get Licences
       env:
         ABOUT_CREDITS_PATH: "*/qtwebengine/src/core/debug/gen/components/resources/about_credits.html"
-      run: find ${{ env.CONAN_USER_HOME_SHORT } -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} . \;
+      run: find ${{ env.CONAN_USER_HOME_SHORT }} -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} . \;
 
     - name: Clean up Conan
       run: |
