@@ -8,6 +8,8 @@ import QtQuick.Window 2.15
 FramelessTopLevelWindow {
     id: window
 
+    visibility: Window.Maximized
+
     property QtObject globalContext
     property Item currentPage: pagesStack.currentPage
     property QtObject windowProfile
