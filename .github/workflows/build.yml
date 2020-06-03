@@ -67,7 +67,7 @@ jobs:
       env:
         ABOUT_CREDITS_PATH: "*/qtwebengine/src/core/debug/gen/components/resources/about_credits.html"
       run: |
-        echo "Try to find the about_credits.html file\n"
+        echo "Try to find the about_credits.html file"
         find . -wholename  ${{ env.ABOUT_CREDITS_PATH }}
         find . -wholename  ${{ env.ABOUT_CREDITS_PATH }} -exec cp {} ${{ github.workspace }} \;
 
