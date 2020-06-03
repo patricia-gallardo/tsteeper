@@ -62,6 +62,7 @@ jobs:
       run: cmake -DCMAKE_INSTALL_PREFIX=${{ env.INSTALL_DIR }} -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Get Licences
+      shell: bash
       working-directory: ${{ env.CONAN_USER_HOME_SHORT }}
       env:
         ABOUT_CREDITS_PATH: "*/qtwebengine/src/core/debug/gen/components/resources/about_credits.html"
