@@ -113,6 +113,8 @@ Tracked in [issue 16](https://github.com/turtlebrowser/turtlebrowser/issues/16)
 
 Using Qt and Chromium comes with a wide range of licences that all have to be taken into account. Not exactly sure what that means for TurtleBrowser yet.
 
+[Qt WebEngine Licensing](https://doc.qt.io/qt-5/qtwebengine-licensing.html)
+
 Icons: [Material icons](https://material.io/resources/icons/?style=outline) licence: [Apache license version 2.0](https://www.apache.org/licenses/LICENSE-2.0.html)
 
 # Development
