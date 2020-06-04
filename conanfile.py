@@ -34,16 +34,6 @@ class ConanDependencies(ConanFile):
         self.requires("gflags/2.2.2")
 
     def imports(self):
-        # Figure out how to copy licences from Qt
-        # qt_path = self.deps_cpp_info["qt"].rootpath
-        # self.output.info("Root path : " + qt_path + "/qt5/qtwebengine/src/3rdparty/chromium/tools/licenses.py")
-        # qt_path = qt_path.replace('\\', '/')
-        # if (os.path.isfile(qt_path)) :
-        #     self.output.info("Python script exists")
-        # else:
-        #     self.output.info("Python script DOES NOT exist")
-        # self.output.info("Root path : " + qt_path + "/qt5/qtwebengine/src/3rdparty/chromium/tools/licenses.py")
-        # Copy this to licenses : qtwebengine/src/core/debug/gen/components/resources/about_credits.html
         self.copy("*.dll", dst="bin", src="bin")
         self.copy("*.dylib*", dst="bin", src="lib")
         self.copy("license*", dst="licenses", folder=True, ignore_case=True)
