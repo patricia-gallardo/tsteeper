@@ -2,7 +2,7 @@ name: CI-Release
 
 on:
   push:
-    branches: [ master, initial_cpack_implementation ]
+    branches: [ master ]
   pull_request:
     branches: [ master ]
 
