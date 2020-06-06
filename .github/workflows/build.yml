@@ -88,6 +88,7 @@ jobs:
         source ${{ github.workspace }}/build/src/activate_run.sh
         cmake --build . --config Release --target install
         cpack -G "RPM;DEB"
+        cp *.deb *.rpm ${{ env.INSTALL_DIR }}
 
     - name: Windows Install (windeployqt)
       if: matrix.os == 'windows-latest'
