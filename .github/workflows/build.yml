@@ -100,7 +100,7 @@ jobs:
       working-directory: build
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
-        cmake --build . --config Release --target install
+        DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH cmake --build . --config Release --target install
 
 #    - name: windeployqt
 #      if: matrix.os == 'windows-latest'
