@@ -81,9 +81,17 @@ jobs:
       working-directory: build
       run: cmake --build . --config Release -j 4
 
-    - name: Install
+    - name: Windows and Linux Install
+      if: (matrix.os == 'windows-latest') || (matrix.os == 'ubuntu-latest')
       working-directory: build
       run: cmake --build . --config Release --target install
+
+    - name: Mac Install
+      if: matrix.os == 'macos-latest'
+      working-directory: build
+      run: |
+        source ${{ github.workspace }}/build/src/activate_run.sh
+        cmake --build . --config Release --target install
 
 #    - name: windeployqt
 #      if: matrix.os == 'windows-latest'
