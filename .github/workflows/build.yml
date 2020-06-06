@@ -95,6 +95,7 @@ jobs:
         ${{ github.workspace }}/build/src/activate_run.ps1
         cmake --build . --config Release --target install
 
+    # https://docs.conan.io/en/latest/howtos/manage_shared_libraries/env_vars.html?highlight=dyld_library_path#using-shared-libraries-from-dependencies
     - name: Mac Install (macdeployqt)
       if: matrix.os == 'macos-latest'
       working-directory: build
