@@ -143,7 +143,6 @@ ToolBar {
 
                     onActiveFocusChanged: {
                         if (activeFocus) {
-                            inputField.text = labelText.text
                             inputField.selectAll()
                         } else {
                             root.unfocusAddressField()
