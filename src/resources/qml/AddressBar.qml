@@ -142,9 +142,6 @@ ToolBar {
                     clip: true
                     focus: true
                     selectByMouse: true
-                    selectedTextColor: Theme.selectedTextColor
-                    selectionColor: Theme.selectionColor
-                    color: Theme.textColor
 
                     onActiveFocusChanged: {
                         if (activeFocus) {
