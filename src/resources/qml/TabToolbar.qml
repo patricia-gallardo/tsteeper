@@ -18,7 +18,8 @@ RowLayout {
     function makeNewTab() {
         tabModel.append({
                             tabUrl: tabModel.speedDial,
-                            tabTitle: tabModel.speedDialTitle
+                            tabTitle: tabModel.speedDialTitle,
+                            tabIcon: tabModel.speedDialIcon
                         })
         tabs.currentIndex = (tabModel.count - 1)
     }
@@ -61,6 +62,11 @@ RowLayout {
                 id: tab
                 text: tabTitle
                 implicitWidth: 240
+
+                display: AbstractButton.TextBesideIcon
+
+                icon.source: tabIcon
+                icon.name: qsTr("Favicon")
 
                 TapHandler {
                     acceptedButtons: Qt.MiddleButton

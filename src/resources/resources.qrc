@@ -20,5 +20,6 @@
         <file>icons/outline-arrow_forward_ios-24px.svg</file>
         <file>icons/outline-refresh-24px.svg</file>
         <file>icons/outline-close-24px.svg</file>
+        <file>icons/public-24px.svg</file>
     </qresource>
 </RCC>

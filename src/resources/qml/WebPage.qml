@@ -12,6 +12,7 @@ ColumnLayout {
     property QtObject windowProfile
     property alias view: webView
     property alias address: webView.url
+    property alias icon: webView.icon
     property string title: webView.title
     property bool offTheRecord: false
 

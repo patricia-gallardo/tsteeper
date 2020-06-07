@@ -9,3 +9,4 @@ var restoreIcon = "../icons/filter_none-24px.svg";
 var checkIcon = "../icons/check_box-24px.svg";
 var newTabIcon = "../icons/add-24px.svg";
 var menuIcon = "../icons/menu-24px.svg";
+var webIcon = "../icons/public-24px.svg";
