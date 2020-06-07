@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-import "theme.js" as Theme
+import "icons.js" as Theme
 
 ToolBar {
     id: root
@@ -35,7 +35,6 @@ ToolBar {
 
         property int itemHeight: root.height - (2 * root.barPadding)
         property int buttonWidth: itemHeight
-        property string iconColor: root.offTheRecord ? Theme.offTheRecordIconColor : Theme.addressBarIconColor
 
         ToolButton {
             id: backButton
@@ -113,7 +112,6 @@ ToolBar {
                     verticalAlignment: Text.AlignVCenter
                     leftPadding: root.barPadding
                     clip: true
-                    color: Theme.textColor
                 }
 
                 MouseArea {

@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 
-import "theme.js" as Theme
+import "icons.js" as Theme
 
 RowLayout {
     id: root

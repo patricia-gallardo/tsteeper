@@ -8,7 +8,7 @@
         <file>qml/TopLevelWindow.qml</file>
         <file>qml/WebPage.qml</file>
         <file>qml/loading.js</file>
-        <file>qml/theme.js</file>
+        <file>qml/icons.js</file>
         <file>qml/url.js</file>
         <file>icons/add-24px.svg</file>
         <file>icons/check_box-24px.svg</file>
