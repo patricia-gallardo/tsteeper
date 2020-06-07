@@ -15,12 +15,6 @@ FramelessTopLevelWindow {
     property QtObject windowProfile
     property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
 
-    onWindowProfileChanged: {
-        if (windowProfile) {
-            tabBar.makeNewTab()
-        }
-    }
-
     function getTitle(currentIndex) {
         var current = tabModel.get(currentIndex)
         return current ? current.tabTitle + " - " : ""
@@ -30,6 +24,11 @@ FramelessTopLevelWindow {
 
     ListModel {
         id: tabModel
+
+        ListElement {
+            tabUrl: "https://www.google.com"
+            tabTitle: "Google"
+        }
     }
 
     ColumnLayout {
