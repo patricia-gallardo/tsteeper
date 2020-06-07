@@ -25,6 +25,9 @@ FramelessTopLevelWindow {
     ListModel {
         id: tabModel
 
+        readonly property string speedDial: "https://www.google.com"
+        readonly property string speedDialTitle: "Google"
+
         ListElement {
             tabUrl: "https://www.google.com"
             tabTitle: "Google"

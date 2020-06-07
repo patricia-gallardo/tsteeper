@@ -1,9 +1,7 @@
-.import "addresses.js" as Addresses
-
 var defaultPrefix = "https://"
 
 function searchUrl(terms) {
-    return Addresses.search + encodeURI(terms);
+    return "https://www.google.com/search?q=" + encodeURI(terms);
 }
 
 function hasWhiteSpace(s) {

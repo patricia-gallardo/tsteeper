@@ -4,7 +4,6 @@ import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 
 import "theme.js" as Theme
-import "addresses.js" as Addresses
 
 RowLayout {
     id: root
@@ -18,8 +17,8 @@ RowLayout {
 
     function makeNewTab() {
         tabModel.append({
-                            tabUrl: Addresses.speedDial,
-                            tabTitle: Addresses.speedDialTitle
+                            tabUrl: tabModel.speedDial,
+                            tabTitle: tabModel.speedDialTitle
                         })
         tabs.currentIndex = (tabModel.count - 1)
     }
