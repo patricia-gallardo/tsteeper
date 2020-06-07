@@ -18,6 +18,8 @@ ToolBar {
     property int barPadding: 4
     property int barRadius: 2
 
+    Component.onCompleted: focusAddressField()
+
     function focusAddressField() {
         addressField.currentIndex = addressField.fieldIndex
     }
