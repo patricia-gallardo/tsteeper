@@ -19,11 +19,11 @@ ToolBar {
     property int barRadius: 2
 
     function focusAddressField() {
-        label.visible = false
+        addressField.currentIndex = addressField.fieldIndex
     }
 
     function unfocusAddressField() {
-        label.visible = true
+        addressField.currentIndex = addressField.labelIndex
     }
 
     RowLayout {
@@ -81,19 +81,35 @@ ToolBar {
             onClicked: root.reload()
         }
 
-        Item {
+        StackLayout {
+            id: addressField
+
             Layout.rightMargin: 2
             Layout.fillWidth: true
             Layout.preferredHeight: displaybox.itemHeight
+            Layout.margins: root.barPadding
+
+            property int labelIndex: 0
+            property int fieldIndex: 1
+
+            currentIndex: addressField.labelIndex
+
+            onCurrentIndexChanged: {
+                inputField.text = labelText.text
+                if (currentIndex == fieldIndex)
+                    inputField.forceActiveFocus()
+            }
 
             Rectangle {
                 id: label
-                anchors.fill: parent
+                Layout.fillHeight: true
+                Layout.fillWidth: true
                 radius: 4
 
                 Text {
                     id: labelText
-                    anchors.verticalCenter: parent.verticalCenter
+                    anchors.fill: label
+                    verticalAlignment: Text.AlignVCenter
                     leftPadding: root.barPadding
                     color: Theme.textColor
                 }
@@ -109,10 +125,9 @@ ToolBar {
 
             Rectangle {
                 id: field
-                anchors.fill: parent
+                Layout.fillHeight: true
+                Layout.fillWidth: true
                 radius: 4
-
-                visible: !label.visible
 
                 TextInput {
                     id: inputField
@@ -120,7 +135,7 @@ ToolBar {
                     verticalAlignment: TextInput.AlignVCenter
                     leftPadding: labelText.leftPadding
 
-                    focus: visible
+                    focus: true
                     selectByMouse: true
                     selectedTextColor: Theme.selectedTextColor
                     selectionColor: Theme.selectionColor
@@ -129,7 +144,6 @@ ToolBar {
                     onActiveFocusChanged: {
                         if (activeFocus) {
                             inputField.text = labelText.text
-                            root.focusAddressField()
                             inputField.selectAll()
                         } else {
                             root.unfocusAddressField()
