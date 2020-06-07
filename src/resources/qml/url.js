@@ -23,7 +23,7 @@ function hasProtocol(s) {
 function construct(typedText){
     if (hasWhiteSpace(typedText) || (!hasPeriod(typedText) && !isChromeUrl(typedText))) {
         return searchUrl(typedText);
-    } else if (!hasProtocol(typedText)) {
+    } else if (!hasProtocol(typedText) && !isChromeUrl(typedText)) {
         return defaultPrefix + typedText;
     } else {
         return typedText;
