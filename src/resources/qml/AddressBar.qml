@@ -87,7 +87,6 @@ ToolBar {
             id: addressField
 
             Layout.rightMargin: 2
-            Layout.fillWidth: true
             Layout.preferredHeight: displaybox.itemHeight
             Layout.margins: root.barPadding
 
@@ -113,6 +112,7 @@ ToolBar {
                     anchors.fill: label
                     verticalAlignment: Text.AlignVCenter
                     leftPadding: root.barPadding
+                    clip: true
                     color: Theme.textColor
                 }
 
@@ -130,6 +130,8 @@ ToolBar {
                 Layout.fillHeight: true
                 Layout.fillWidth: true
                 radius: 4
+                border.color : "#FFC107"
+                border.width : 2
 
                 TextInput {
                     id: inputField
@@ -137,6 +139,7 @@ ToolBar {
                     verticalAlignment: TextInput.AlignVCenter
                     leftPadding: labelText.leftPadding
 
+                    clip: true
                     focus: true
                     selectByMouse: true
                     selectedTextColor: Theme.selectedTextColor
