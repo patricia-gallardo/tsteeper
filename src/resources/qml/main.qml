@@ -6,6 +6,7 @@ QtObject {
 
     property QtObject publicProfile: WebEngineProfile {
         storageName: "Profile"
+        useForGlobalCertificateVerification: true
     }
 
     property QtObject privateProfile: WebEngineProfile {
