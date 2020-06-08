@@ -19,6 +19,7 @@ class ConanDependencies(ConanFile):
         "qt:with_glib": False,
         "fontconfig:shared": True,
         "harfbuzz:with_glib": False,
+        "libx11:shared": True,
         "libxscrnsaver:shared": True,
     }
 
