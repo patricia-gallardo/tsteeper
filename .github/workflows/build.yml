@@ -57,9 +57,9 @@ jobs:
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
 
-#    - name: Force rebuild of Qt
-#      if: matrix.os == 'ubuntu-latest'
-#      run: conan remove -f qt/5.15.0@bincrafters/stable
+    - name: Force rebuild of Qt
+      if: matrix.os == 'ubuntu-latest'
+      run: conan remove -f qt/5.15.0@bincrafters/stable
 
     - name: Get Conan Dependencies
       working-directory: build
