@@ -25,7 +25,7 @@ jobs:
 
     # Check if GitHub Cache has it, because that's free
     - name: Using the builtin GitHub Cache Action for .conan
-      if: matrix.os == 'windows-latest'
+      #if: matrix.os == 'windows-latest'
       id: github-cache-conan
       uses: actions/cache@v1
       env:
@@ -56,6 +56,10 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
+
+    - name: Force rebuild of Qt
+      if: matrix.os == 'ubuntu-latest'
+      run: conan remove -f qt/5.15.0@bincrafters/stable
 
     - name: Get Conan Dependencies
       working-directory: build
