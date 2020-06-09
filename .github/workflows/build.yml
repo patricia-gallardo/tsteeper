@@ -23,16 +23,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-#    # Check if GitHub Cache has it, because that's free
-#    - name: Using the builtin GitHub Cache Action for .conan
-#      #if: matrix.os == 'windows-latest'
-#      id: github-cache-conan
-#      uses: actions/cache@v1
-#      env:
-#        cache-name: cache-conan-modules
-#      with:
-#        path: ${{ env.CONAN_USER_HOME }}
-#        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+    # Check if GitHub Cache has it, because that's free
+    - name: Using the builtin GitHub Cache Action for .conan
+      id: github-cache-conan
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: ${{ env.CONAN_USER_HOME }}
+        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
 
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
@@ -56,10 +55,6 @@ jobs:
     - name: Fix Path on Ubuntu
       if: matrix.os == 'ubuntu-latest'
       run: echo "::add-path::/home/runner/.local/bin"
-
-#    - name: Force rebuild of Qt
-#      if: matrix.os == 'ubuntu-latest'
-#      run: conan remove -f qt/5.15.0@bincrafters/stable
 
     - name: Get Conan Dependencies
       working-directory: build
@@ -108,20 +103,6 @@ jobs:
       run: |
         source ${{ github.workspace }}/build/src/activate_run.sh
         DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH cmake --build . --config Release --target install
-
-#    - name: windeployqt
-#      if: matrix.os == 'windows-latest'
-#      working-directory: ${{ env.INSTALL_DIR }}/bin/
-#      run: |
-#        ${{ github.workspace }}/build/src/activate_run.ps1
-#        windeployqt.exe --qmldir ${{ github.workspace }}/src/resources/qml/ TurtleBrowser.exe
-
-#    - name: macdeployqt
-#      if: matrix.os == 'macos-latest'
-#      working-directory: ${{ env.INSTALL_DIR }}
-#      run: |
-#        source ${{ github.workspace }}/build/src/activate_run.sh
-#        DYLD_LIBRARY_PATH=$DYLD_LIBRARY_PATH DYLD_FRAMEWORK_PATH=$DYLD_FRAMEWORK_PATH macdeployqt TurtleBrowser.app -dmg -qmldir=${{ github.workspace }}/src/resources/qml/
 
     - name: Upload artifact
       uses: actions/upload-artifact@v2
