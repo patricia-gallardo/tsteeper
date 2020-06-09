@@ -133,6 +133,24 @@ Tip: For editing qml QtCreator is by far the best IDE, for C++ CLion is probably
 QT_DEBUG_PLUGINS=1
 LD_DEBUG=libs
 ```
+
+## Windows Conan Cache build settings
+```
+Configuration:
+[settings]
+arch=x86_64
+arch_build=x86_64
+build_type=Release
+compiler=Visual Studio
+compiler.runtime=MD
+compiler.version=16
+os=Windows
+os_build=Windows
+[options]
+[build_requires]
+[env]
+```
+
 ## Using conan install
 
 - Conan needs Python 3
