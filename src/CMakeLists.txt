@@ -5,6 +5,8 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
+OPTION(UPDATE_CONAN "Update Conan Cache" OFF)
+
 # Download automatically, you can also just copy the conan.cmake file
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
     message(STATUS "Downloading conan.cmake from https://github.com/conan-io/cmake-conan")
@@ -14,8 +16,12 @@ endif ()
 
 include(${CMAKE_BINARY_DIR}/conan.cmake)
 conan_add_remote(NAME bincrafters INDEX 1 URL https://api.bintray.com/conan/bincrafters/public-conan)
-# conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
-conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+
+if (UPDATE_CONAN)
+    conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS UPDATE BUILD outdated)
+else()
+    conan_cmake_run(CONANFILE ../conanfile.py BASIC_SETUP CMAKE_TARGETS BUILD missing)
+endif (UPDATE_CONAN)
 
 # For running locally in CLion
 if (NOT DEFINED ENV{CMAKE_PREFIX_PATH})
