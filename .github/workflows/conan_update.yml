@@ -3,7 +3,7 @@ name: Update Conan
 on:
   schedule:
     # * is a special character in YAML so you have to quote this string
-    - cron:  '30 11 * * 3'
+    - cron:  '00 12 * * 3'
 
 jobs:
   build:
@@ -21,26 +21,15 @@ jobs:
     steps:
     - uses: actions/checkout@v2
 
-    # Check if GitHub Cache has it, because that's free
-    - name: Using the builtin GitHub Cache Action for .conan
-      id: github-cache-conan
-      uses: actions/cache@v1
-      env:
-        cache-name: cache-conan-modules
-      with:
-        path: ${{ env.CONAN_USER_HOME }}
-        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
-
     # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
     - name: Cache Conan modules
-      if: steps.github-cache-conan.outputs.cache-hit != 'true'
       id: cache-conan
       uses: turtlebrowser/conan-cache@master
       with:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
           cache_name: turtlebrowser/conan-cache-turtlebrowser
-          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+          key: host-${{ runner.os }}-target-${{ runner.os }}-update-${{ hashFiles('conanfile.py') }}
           target_os: ${{ runner.os }}
           lfs_limit: 60
 
@@ -56,7 +45,7 @@ jobs:
 
     - name: Get Conan Dependencies
       working-directory: build
-      run: cmake -DCMAKE_BUILD_TYPE=Release ..
+      run: cmake -DUPDATE_CONAN=ON -DCMAKE_BUILD_TYPE=Release ..
 
     - name: Clean up Conan
       run: |
