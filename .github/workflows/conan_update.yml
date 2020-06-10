@@ -1,0 +1,65 @@
+name: Update Conan
+
+on:
+  schedule:
+    # * is a special character in YAML so you have to quote this string
+    - cron:  '10 13 * * 3'
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, macos-latest] # [ubuntu-latest, macos-latest, windows-latest]
+
+    runs-on: ${{ matrix.os }}
+    
+    env:
+      CONAN_USER_HOME: "${{ github.workspace }}/release/"
+      CONAN_USER_HOME_SHORT: "${{ github.workspace }}/release/short"
+
+    steps:
+    - uses: actions/checkout@v2
+
+    # Check if GitHub Cache has it, because that's free
+    - name: Using the builtin GitHub Cache Action for .conan
+      id: github-cache-conan
+      uses: actions/cache@v1
+      env:
+        cache-name: cache-conan-modules
+      with:
+        path: ${{ env.CONAN_USER_HOME }}
+        key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+
+    # If GitHub Cache doesn't have it, get from Conan Cache (has git lfs cost)
+    - name: Cache Conan modules
+      if: steps.github-cache-conan.outputs.cache-hit != 'true'
+      id: cache-conan
+      uses: turtlebrowser/conan-cache@master
+      with:
+          bot_name: turtlebrowser-bot
+          bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
+          cache_name: turtlebrowser/conan-cache-turtlebrowser
+          key: host-${{ runner.os }}-target-${{ runner.os }}-${{ hashFiles('conanfile.py') }}
+          target_os: ${{ runner.os }}
+          lfs_limit: 60
+
+    - name: Get Conan
+      run: |
+        pip3 install wheel setuptools
+        pip3 install conan --upgrade
+        mkdir build
+        
+    - name: Fix Path on Ubuntu
+      if: matrix.os == 'ubuntu-latest'
+      run: echo "::add-path::/home/runner/.local/bin"
+
+    - name: Get Conan Dependencies
+      working-directory: build
+      run: cmake -DCMAKE_BUILD_TYPE=Release ..
+
+    - name: Clean up Conan
+      run: |
+        conan remove -f "*" --builds
+        conan remove -f "*" --src
+        conan remove -f "*" --system-reqs
