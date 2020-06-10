@@ -29,7 +29,7 @@ jobs:
           bot_name: turtlebrowser-bot
           bot_token: ${{ secrets.CACHE_REPO_TOKEN }}
           cache_name: turtlebrowser/conan-cache-turtlebrowser
-          key: host-${{ runner.os }}-target-${{ runner.os }}-update-${{ hashFiles('conanfile.py') }}
+          key: host-${{ runner.os }}-target-${{ runner.os }}-update-${{ github.run_number }}
           target_os: ${{ runner.os }}
           lfs_limit: 60
 
