@@ -55,4 +55,4 @@ jobs:
         
     - name: Dependency Checker
       if: matrix.os == 'ubuntu-latest'
-      run: pip install -U cve-bin-tool # csv2cve dependency.csv
+      run: pip3 install -U cve-bin-tool # csv2cve dependency.csv
