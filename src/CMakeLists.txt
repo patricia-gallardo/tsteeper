@@ -6,6 +6,15 @@ set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
 OPTION(UPDATE_CONAN "Update Conan Cache" OFF)
+OPTION(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
+
+if (APPLE)
+    set(TARGET_OS_NAME "macos")
+elseif (MSVC)
+    set(TARGET_OS_NAME "windows")
+elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
+    set(TARGET_OS_NAME "linux")
+endif ()
 
 # Download automatically, you can also just copy the conan.cmake file
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -115,10 +124,12 @@ if (MSVC OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
     elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
         set(ROOT_INSTALL_DIR ${CMAKE_INSTALL_BINDIR})
     endif ()
-
-    # Install the licenses
-    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${ROOT_INSTALL_DIR})
 endif ()
+
+if (CHECK_IN_LICENSES)
+    # Install the licenses
+    install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_SOURCE_DIR}/src/resources/licenses/${TARGET_OS_NAME}/)
+endif (CHECK_IN_LICENSES)
 
 # Make a runnable bundle for linux
 if (CMAKE_SYSTEM_NAME STREQUAL "Linux")
