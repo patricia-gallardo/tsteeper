@@ -3,7 +3,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 
-import "icons.js" as Theme
+import "icons.js" as Icons
 
 RowLayout {
     id: root
@@ -85,7 +85,7 @@ RowLayout {
                     display: AbstractButton.IconOnly
                     padding: 0
 
-                    icon.source: Theme.closeTabIcon
+                    icon.source: Icons.closeTabIcon
                     icon.name: qsTr("Close Tab")
 
                     onClicked: closeTabByIndex(index)
@@ -105,7 +105,7 @@ RowLayout {
         spacing: 0
         padding: 2
 
-        icon.source: Theme.newTabIcon
+        icon.source: Icons.newTabIcon
         icon.name: qsTr("New Tab")
 
         onClicked: makeNewTab()
@@ -151,7 +151,7 @@ RowLayout {
         spacing: 0
         padding: 2
 
-        icon.source: Theme.minimizeIcon
+        icon.source: Icons.minimizeIcon
         icon.name: qsTr("Minimize Window")
 
         onClicked: window.showMinimized()
@@ -169,7 +169,7 @@ RowLayout {
         spacing: 0
         padding: 2
 
-        icon.source: isMaximized ? Theme.restoreIcon : Theme.maximizeIcon
+        icon.source: isMaximized ? Icons.restoreIcon : Icons.maximizeIcon
         icon.name: isMaximized ? qsTr("Restore Window") : qsTr("Maximize Window")
 
         onClicked: window.toggleMaximized()
@@ -185,7 +185,7 @@ RowLayout {
         spacing: 0
         padding: 2
 
-        icon.source: Theme.closeTabIcon
+        icon.source: Icons.closeTabIcon
         icon.name: qsTr("Close Window")
 
         onClicked: window.close()

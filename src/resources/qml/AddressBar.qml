@@ -2,7 +2,7 @@ import QtQuick 2.15
 import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 
-import "icons.js" as Theme
+import "icons.js" as Icons
 
 ToolBar {
     id: root
@@ -46,7 +46,7 @@ ToolBar {
             spacing: 0
             padding: 2
 
-            icon.source: Theme.backIcon
+            icon.source: Icons.backIcon
             icon.name: qsTr("Back")
 
             onClicked: root.back()
@@ -61,7 +61,7 @@ ToolBar {
             spacing: 0
             padding: 2
 
-            icon.source: Theme.forwardIcon
+            icon.source: Icons.forwardIcon
             icon.name: qsTr("Forward")
 
             onClicked: root.forward()
@@ -76,7 +76,7 @@ ToolBar {
             spacing: 0
             padding: 2
 
-            icon.source: Theme.reloadIcon
+            icon.source: Icons.reloadIcon
             icon.name: qsTr("Reload")
 
             onClicked: root.reload()
@@ -165,7 +165,7 @@ ToolBar {
             padding: 2
 
             display: AbstractButton.IconOnly
-            icon.source: Theme.menuIcon
+            icon.source: Icons.menuIcon
             icon.name: qsTr("Open Browser Menu")
 
             onClicked: menu.popup((settingsButton.width - menu.width),

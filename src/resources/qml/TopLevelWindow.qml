@@ -5,7 +5,7 @@ import QtQuick.Controls 2.15
 import QtQuick.Layouts 1.15
 import QtQuick.Window 2.15
 
-import "icons.js" as Theme
+import "icons.js" as Icons
 
 FramelessTopLevelWindow {
     id: window
@@ -29,7 +29,7 @@ FramelessTopLevelWindow {
 
         readonly property string speedDial: "https://www.google.com"
         readonly property string speedDialTitle: "Google"
-        readonly property string speedDialIcon: Theme.webIcon
+        readonly property string speedDialIcon: Icons.webIcon
 
         ListElement {
             tabUrl: "https://www.google.com"
