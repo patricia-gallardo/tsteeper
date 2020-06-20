@@ -13,7 +13,6 @@ FramelessTopLevelWindow {
     visibility: Window.Maximized
 
     property QtObject globalContext
-    property Item currentPage: pagesStack.currentPage
     property QtObject windowProfile
     property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
 
@@ -56,16 +55,6 @@ FramelessTopLevelWindow {
         StackLayout {
             id: pagesStack
             currentIndex: tabBar.currentIndex
-
-            property Item currentPage
-
-            onCurrentIndexChanged: {
-                var currentItem = pages.itemAt(currentIndex)
-                if (currentItem)
-                    currentPage = currentItem.view
-                else
-                    currentPage = null
-            }
 
             Repeater {
                 id: pages
