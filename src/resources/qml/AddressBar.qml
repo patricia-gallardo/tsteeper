@@ -14,6 +14,7 @@ ToolBar {
     signal back
     signal forward
     signal reload
+    signal showLicenses
 
     property int barPadding: 4
     property int barRadius: 2
@@ -175,23 +176,9 @@ ToolBar {
                 id: menu
 
                 Action {
-                    text: qsTr("First")
-                }
-                Action {
-                    text: qsTr("Second")
-                }
-                Action {
-                    text: qsTr("Third")
-                    checkable: true
-                    checked: true
-                }
-
-                Menu {
-
-                    title: qsTr("Help")
-                    Action {
-                        text: qsTr("About")
-                    }
+                    text: qsTr("Licenses")
+                    icon.source: Icons.checkIcon
+                    onTriggered: root.showLicenses()
                 }
             }
         }
