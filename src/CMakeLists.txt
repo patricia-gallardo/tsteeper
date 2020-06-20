@@ -5,8 +5,9 @@ set(CMAKE_AUTOMOC ON)
 set(CMAKE_AUTOUIC ON)
 set(CMAKE_AUTORCC ON)
 
-OPTION(UPDATE_CONAN "Update Conan Cache" OFF)
-OPTION(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
+option(UPDATE_CONAN "Update Conan Cache" OFF)
+option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
+option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy them into the source tree" OFF)
 
 if (APPLE)
     set(TARGET_OS_NAME "macos")
@@ -45,14 +46,16 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
-qt5_add_resources(QT_RESOURCES resources/resources.qrc)
+if (CHECK_IN_LICENSES)
+    qt5_add_resources(QT_RESOURCES resources/resources.qrc)
+else()
+    qt5_add_resources(QT_RESOURCES resources/resources.qrc resources/linux_licenses.qrc)
+endif(CHECK_IN_LICENSES)
 
 set(tsFiles
     ${PROJECT_NAME}_de_AT.ts
     ${PROJECT_NAME}_de_DE.ts
     ${PROJECT_NAME}_ja.ts)
-
-option(ENABLE_TS_RESCAN "Enable rescanning sources to update .ts files" OFF)
 
 if (ENABLE_TS_RESCAN)
     # Need to generate the ts files using lupdate
@@ -128,6 +131,7 @@ endif ()
 
 if (CHECK_IN_LICENSES)
     # Install the licenses
+    # find licenses/linux/ -type f -exec echo "<file>" {} "</file>" \; > linux_licenses.qrc
     install(DIRECTORY ${CMAKE_CURRENT_BINARY_DIR}/licenses DESTINATION ${CMAKE_SOURCE_DIR}/src/resources/licenses/${TARGET_OS_NAME}/)
 endif (CHECK_IN_LICENSES)
 
