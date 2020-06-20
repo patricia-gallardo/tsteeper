@@ -16,6 +16,10 @@ FramelessTopLevelWindow {
     property QtObject windowProfile
     property bool windowOffTheRecord: windowProfile ? windowProfile.offTheRecord : false
 
+    function showLicenses() {
+        tabBar.makeLicenseTab()
+    }
+
     function getTitle(currentIndex) {
         var current = tabModel.get(currentIndex)
         return current ? current.tabTitle + " - " : ""
@@ -34,6 +38,7 @@ FramelessTopLevelWindow {
             tabUrl: "https://www.google.com"
             tabTitle: "Google"
             tabIcon: ""
+            isPage: true
         }
     }
 
@@ -63,19 +68,33 @@ FramelessTopLevelWindow {
                 Layout.fillWidth: true
                 Layout.fillHeight: true
 
+                Loader {
+                    id: pageLoader
+                    property variant modelData: model
+                    sourceComponent: modelData.isPage ? webDelegate : licenseDelegate
+                }
+            }
+
+            Component {
+                id: webDelegate
                 WebPage {
                     id: page
+                    address: modelData ? modelData.tabUrl : ""
                     windowProfile: window.windowProfile
                     offTheRecord: window.windowOffTheRecord
-                    Component.onCompleted: address = tabUrl
-
-                    onTitleChanged: tabTitle = page.title
-                    onAddressChanged: tabUrl = page.address
+                    onShowLicenses: window.showLicenses()
+                    onTitleChanged: modelData.tabTitle = page.title
+                    onAddressChanged: modelData.tabUrl = page.address
                     onIconChanged: {
                         console.log("fav icon changed : " + page.icon)
-                        tabIcon = Theme.webIcon
+                        modelData.tabIcon = Icons.webIcon
                     }
                 }
+            }
+
+            Component {
+                id: licenseDelegate
+                LicensePage {}
             }
         }
     }

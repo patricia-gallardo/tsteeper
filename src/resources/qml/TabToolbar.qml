@@ -15,13 +15,22 @@ RowLayout {
     property alias currentIndex: tabs.currentIndex
     property alias model: tabsRepeater.model
 
-    function makeNewTab() {
+    function openTab(url, title, icon, page) {
         tabModel.append({
-                            tabUrl: tabModel.speedDial,
-                            tabTitle: tabModel.speedDialTitle,
-                            tabIcon: tabModel.speedDialIcon
+                            tabUrl: url,
+                            tabTitle: title,
+                            tabIcon: icon,
+                            isPage: page
                         })
-        tabs.currentIndex = (tabModel.count - 1)
+        tabs.currentIndex = (tabs.count - 1)
+    }
+
+    function makeLicenseTab() {
+        root.openTab("", "Licenses", Icons.checkIcon, false);
+    }
+
+    function makeNewTab() {
+        root.openTab(tabModel.speedDial, tabModel.speedDialTitle, tabModel.speedDialIcon, true);
     }
 
     function closeTabByIndex(tabIndex) {
