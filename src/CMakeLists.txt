@@ -11,11 +11,18 @@ option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy
 
 if (APPLE)
     set(TARGET_OS_NAME "macos")
+    set(LICENSE_QRC resources/linux_licenses.qrc)
 elseif (MSVC)
     set(TARGET_OS_NAME "windows")
+    set(LICENSE_QRC resources/linux_licenses.qrc)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(TARGET_OS_NAME "linux")
+    set(LICENSE_QRC resources/linux_licenses.qrc)
 endif ()
+
+if (CHECK_IN_LICENSES)
+    set(LICENSE_QRC "")
+endif(CHECK_IN_LICENSES)
 
 # Download automatically, you can also just copy the conan.cmake file
 if (NOT EXISTS "${CMAKE_BINARY_DIR}/conan.cmake")
@@ -46,11 +53,7 @@ include_directories(${Qt5Widgets_INCLUDE_DIRS} ${QtQml_INCLUDE_DIRS})
 
 add_definitions(${Qt5Widgets_DEFINITIONS} ${QtQml_DEFINITIONS} ${${Qt5Quick_DEFINITIONS}})
 
-if (CHECK_IN_LICENSES)
-    qt5_add_resources(QT_RESOURCES resources/resources.qrc)
-else()
-    qt5_add_resources(QT_RESOURCES resources/resources.qrc resources/linux_licenses.qrc)
-endif(CHECK_IN_LICENSES)
+qt5_add_resources(QT_RESOURCES resources/resources.qrc ${LICENSE_QRC})
 
 set(tsFiles
     ${PROJECT_NAME}_de_AT.ts
