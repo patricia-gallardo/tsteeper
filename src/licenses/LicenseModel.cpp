@@ -2,10 +2,17 @@
 
 #include <QDirIterator>
 
+#ifdef _WIN32
+static const char *const platformRootPath = ":/licenses/windows/licenses/licenses/windows/licenses";
+static const char *const qtRootPath = ":/licenses/windows/licenses/licenses/windows/licenses/qt";
+static const char *const toolkitRootPath = ":/licenses/windows/licenses/licenses/windows/licenses/qt/licenses";
+static const char *const webviewRootPath = ":/licenses/windows/licenses/licenses/windows/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
+#else
 static const char *const platformRootPath = ":/licenses/linux/licenses/licenses/linux/licenses";
 static const char *const qtRootPath = ":/licenses/linux/licenses/licenses/linux/licenses/qt";
 static const char *const toolkitRootPath = ":/licenses/linux/licenses/licenses/linux/licenses/qt/licenses";
 static const char *const webviewRootPath = ":/licenses/linux/licenses/licenses/linux/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
+#endif
 
 static const char * getRootPath(LicenseType type) {
   if (type == LicenseType::WebView)

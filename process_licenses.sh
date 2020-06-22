@@ -1,0 +1,109 @@
+#!/bin/bash
+
+[ $# -eq 0 ] && {
+  echo "Usage: $0 <full path to APPLICATION checkout>"
+  exit 1
+}
+
+confirm() {
+  read -r -p "${1:-Are you sure? [y/N]} " response
+  case "$response" in
+  [yY][eE][sS] | [yY])
+    true
+    ;;
+  *)
+    false
+    ;;
+  esac
+}
+
+APPLICATION_DIR="$1"
+
+header() {
+  echo -e "\e[35m$1\e[0m"
+}
+
+echo "APPLICATION dir: " ${APPLICATION_DIR}
+
+[ ! -d ${APPLICATION_DIR} ] && {
+  echo "${APPLICATION_DIR} DOES NOT EXIST"
+  exit 1
+}
+
+export CONAN_USER_HOME="c:/release"
+
+[ ! -d ${CONAN_USER_HOME} ] && {
+  echo "${CONAN_USER_HOME} DOES NOT EXIST"
+  exit 1
+}
+
+export CONAN_USER_HOME_SHORT=${CONAN_USER_HOME}/short
+
+[ ! -d ${CONAN_USER_HOME_SHORT} ] && {
+  echo "${CONAN_USER_HOME_SHORT} DOES NOT EXIST"
+  exit 1
+}
+
+export INSTALL_SUB_DIR=install_release
+
+export APPLICATION_INSTALL_DIR=${APPLICATION_DIR}/${INSTALL_SUB_DIR}
+
+export CONAN_CACHE_BRANCH=host-Windows-target-Windows-master
+export PLATFORM_NAME=windows
+export RELATIVE_LICENSE_PATH=src/resources/licenses/${PLATFORM_NAME}/
+export QRC_FILENAME=${PLATFORM_NAME}_licenses.qrc
+export RELATIVE_QRC_PATH=src/resources/${QRC_FILENAME}
+
+header "Prepare Cache for update"
+
+confirm "Clean cache? [y/N]" && cd ${CONAN_USER_HOME} && git clean -df && git checkout . && git checkout ${CONAN_CACHE_BRANCH}
+
+confirm "Update cache? [y/N]" && cd ${CONAN_USER_HOME} && git pull && git lfs pull
+
+confirm "Prepare short paths [y/N]" && cd ${CONAN_USER_HOME} && find .conan/ -name .conan_link -exec perl -pi -e 's=CONAN_USER_HOME_SHORT=$ENV{CONAN_USER_HOME_SHORT}=g' {} +
+
+header "Prepare Application for update"
+
+confirm "Clean APPLICATION? [y/N]" && cd ${APPLICATION_DIR} && git stash && git clean -df && git checkout .
+
+confirm "Update APPLICATION? [y/N]" && cd ${APPLICATION_DIR} && git pull
+
+confirm "Remove old build directory? [y/N]" && cd ${APPLICATION_DIR} && rm -rf build
+
+confirm "Create build directory? [y/N]" && cd ${APPLICATION_DIR} && mkdir build
+
+confirm "Remove old install directory? [y/N]" && cd ${APPLICATION_DIR} && rm -rf ${INSTALL_SUB_DIR}
+
+header "Clean Licenses"
+
+confirm "Clean APPLICATION licenses? [y/N]" && cd ${APPLICATION_DIR} && rm -rf ${RELATIVE_LICENSE_PATH}
+
+header "Produce licenses"
+
+confirm "Start build? [y/N]" && cd ${APPLICATION_DIR} && cd build && cmake -DCHECK_IN_LICENSES=ON -DCMAKE_INSTALL_PREFIX=${APPLICATION_INSTALL_DIR} -DCMAKE_BUILD_TYPE=Release ..
+
+confirm "Install build? [y/N]" && cd ${APPLICATION_DIR} && cd build && cmake --build . --config Release --target install
+
+confirm "Fix licenses? [y/N]" && cd ${APPLICATION_DIR} && find ${RELATIVE_LICENSE_PATH} -name "*.cpp" -exec rm {} + && find ${RELATIVE_LICENSE_PATH} -name "*.h" -exec rm {} +
+
+confirm "Truncate qrc file? [y/N]" && cd ${APPLICATION_DIR} && : >${RELATIVE_QRC_PATH}
+
+confirm "Write start qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '<RCC><qresource prefix="/licenses/'${PLATFORM_NAME}'/licenses">' >>${RELATIVE_QRC_PATH}
+
+confirm "Write licenses? [y/N]" && cd ${APPLICATION_DIR}/src/resources/ && find licenses/${PLATFORM_NAME}/ -type f -exec echo "<file>{}</file>" \; >>${QRC_FILENAME}
+
+confirm "Write end qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '</qresource></RCC>' >>${RELATIVE_QRC_PATH}
+
+confirm "Commit qrc file? [y/N]" && cd ${APPLICATION_DIR} && git add ${RELATIVE_QRC_PATH} && git commit -m "Updated qrc file"
+
+confirm "Commit license files [y/N]" && cd ${RELATIVE_LICENSE_PATH} && git add -A && git commit -m "Updated license files"
+
+header "Test cache locally"
+
+confirm "TEST: Clean APPLICATION? [y/N]" && cd ${APPLICATION_DIR} && git stash && git clean -df && git checkout .
+
+confirm "TEST: Remove old build directory? [y/N]" && cd ${APPLICATION_DIR} && rm -rf build
+
+confirm "TEST: Create build directory? [y/N]" && cd ${APPLICATION_DIR} && mkdir build
+
+confirm "TEST: Start REGULAR build? [y/N]" && cd ${APPLICATION_DIR} && cd build && cmake -DUPDATE_CONAN=OFF -DCMAKE_BUILD_TYPE=Release ..
