@@ -1,9 +1,28 @@
 #!/bin/bash
 
-[ $# -eq 0 ] && {
-  echo "Usage: $0 <full path to APPLICATION checkout>"
+[ $# -lt 2 ] && {
+  echo "Usage: $0 [-linux|-windows] <full path to APPLICATION checkout>"
   exit 1
 }
+
+export PLATFORM_NAME=""
+export CONAN_CACHE_BRANCH=""
+export CONAN_USER_HOME=""
+
+if [ "$1" == "-linux" ]; then
+    PLATFORM_NAME=linux
+    CONAN_CACHE_BRANCH=host-Linux-target-Linux-master
+    CONAN_USER_HOME="/Code/release"
+elif [ "$1" == "-windows" ]; then
+    PLATFORM_NAME=windows
+    CONAN_CACHE_BRANCH=host-Windows-target-Windows-master
+    CONAN_USER_HOME="c:/release"
+else
+  echo "Usage: $0 [-linux|-windows] <full path to APPLICATION checkout>"
+  exit 1
+fi
+
+APPLICATION_DIR="$2"
 
 confirm() {
   read -r -p "${1:-Are you sure? [y/N]} " response
@@ -17,8 +36,6 @@ confirm() {
   esac
 }
 
-APPLICATION_DIR="$1"
-
 header() {
   echo -e "\e[35m$1\e[0m"
 }
@@ -29,8 +46,6 @@ echo "APPLICATION dir: " ${APPLICATION_DIR}
   echo "${APPLICATION_DIR} DOES NOT EXIST"
   exit 1
 }
-
-export CONAN_USER_HOME="c:/release"
 
 [ ! -d ${CONAN_USER_HOME} ] && {
   echo "${CONAN_USER_HOME} DOES NOT EXIST"
@@ -45,11 +60,7 @@ export CONAN_USER_HOME_SHORT=${CONAN_USER_HOME}/short
 }
 
 export INSTALL_SUB_DIR=install_release
-
 export APPLICATION_INSTALL_DIR=${APPLICATION_DIR}/${INSTALL_SUB_DIR}
-
-export CONAN_CACHE_BRANCH=host-Windows-target-Windows-master
-export PLATFORM_NAME=windows
 export RELATIVE_LICENSE_PATH=src/resources/licenses/${PLATFORM_NAME}/
 export QRC_FILENAME=${PLATFORM_NAME}_licenses.qrc
 export RELATIVE_QRC_PATH=src/resources/${QRC_FILENAME}
