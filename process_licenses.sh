@@ -96,7 +96,7 @@ confirm "Write end qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '</qresourc
 
 confirm "Commit qrc file? [y/N]" && cd ${APPLICATION_DIR} && git add ${RELATIVE_QRC_PATH} && git commit -m "Updated qrc file"
 
-confirm "Commit license files [y/N]" && cd ${RELATIVE_LICENSE_PATH} && git add -A && git commit -m "Updated license files"
+confirm "Commit license files [y/N]" && cd ${RELATIVE_LICENSE_PATH} && git add -A . && git commit -m "Updated license files"
 
 header "Test cache locally"
 
