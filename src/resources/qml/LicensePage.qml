@@ -4,7 +4,6 @@ import QtQuick.Controls 2.15
 import QtQuick.Controls 1.4 as Classic
 import QtQml.Models 2.15
 
-import LicenseReader 1.0
 import "icons.js" as Icons
 
 ColumnLayout {
@@ -128,10 +127,6 @@ ColumnLayout {
 
                 property alias licenseView: displayLicense.text
 
-                function displayText(filename) {
-                    displayLicense.text = licenseReader.read(filename)
-                }
-
                 function clearText() {
                     displayLicense.text = ""
                     root.clearSearch()
@@ -140,10 +135,6 @@ ColumnLayout {
                 function search(text) {
                     var currentItem = treeStack.children[tabBar.currentIndex]
                     currentItem.model.setFilterFixedString(text)
-                }
-
-                LicenseReader {
-                    id: licenseReader
                 }
 
                 StackLayout {
@@ -155,19 +146,19 @@ ColumnLayout {
 
                     LicenseNavigator {
                         model: licenseModelPlatform
-                        onDisplayLicense: licenseSelector.displayText(filename)
+                        onDisplayLicense: licenseSelector.licenseView = licenseText
                     }
                     LicenseNavigator {
                         model: licenseModelToolkit
-                        onDisplayLicense: licenseSelector.displayText(filename)
+                        onDisplayLicense: licenseSelector.licenseView = licenseText
                     }
                     LicenseNavigator {
                         model: licenseModelWebView
-                        onDisplayLicense: licenseSelector.displayText(filename)
+                        onDisplayLicense: licenseSelector.licenseView = licenseText
                     }
                     LicenseNavigator {
                         model: licenseModelAll
-                        onDisplayLicense: licenseSelector.displayText(filename)
+                        onDisplayLicense: licenseSelector.licenseView = licenseText
                     }
                 }
             }

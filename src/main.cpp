@@ -1,5 +1,4 @@
 #include "Context.h"
-#include "licenses/LicenseReader.h"
 
 #include <QApplication>
 #include <QQmlApplicationEngine>
@@ -14,8 +13,6 @@ int main(int argc, char *argv[]) {
   QtWebEngine::initialize();
 
   Context context;
-
-  qmlRegisterType<LicenseReader, 1>("LicenseReader", 1, 0, "LicenseReader");
 
   QQmlApplicationEngine engine;
   engine.rootContext()->setContextProperty("licenseModelWebView", context.searchModelWebLicenses());

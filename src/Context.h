@@ -1,19 +1,18 @@
 #ifndef TURTLEBROWSER_CONTEXT_H
 #define TURTLEBROWSER_CONTEXT_H
 
+#include "licenses/LicenseFilter.h"
 #include "licenses/LicenseModel.h"
-
-#include <QtCore/QSortFilterProxyModel>
 
 class Context {
 public:
 
   Context();
 
-  QSortFilterProxyModel * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
-  QSortFilterProxyModel * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
-  QSortFilterProxyModel * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
-  QSortFilterProxyModel * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
+  LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
+  LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
+  LicenseFilter * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
+  LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
 
 private:
 
@@ -24,10 +23,10 @@ private:
   LicenseModel m_licenseModelAll;
 
   // License Search Models
-  QSortFilterProxyModel m_filterLicenseModelWebView;
-  QSortFilterProxyModel m_filterLicenseModelToolkit;
-  QSortFilterProxyModel m_filterLicenseModelPlatform;
-  QSortFilterProxyModel m_filterLicenseModelAll;
+  LicenseFilter m_filterLicenseModelWebView;
+  LicenseFilter m_filterLicenseModelToolkit;
+  LicenseFilter m_filterLicenseModelPlatform;
+  LicenseFilter m_filterLicenseModelAll;
 
   static void connectSearchModel(LicenseModel * model, QSortFilterProxyModel & search_model);
 };

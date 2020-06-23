@@ -7,7 +7,8 @@ ColumnLayout {
 
     property int pointSize: 12
     property alias model: tree.model
-    signal displayLicense(string filename)
+    property string licenseText
+    signal displayLicense
 
     Classic.TreeView {
         id: tree
@@ -52,8 +53,8 @@ ColumnLayout {
 
         onDoubleClicked: {
             tree.toggleExpanded(index)
-            let filename = model.data(index, Qt.UserRole)
-            displayLicense(filename)
+            root.licenseText = model.readFile(index)
+            root.displayLicense()
         }
     }
 }
