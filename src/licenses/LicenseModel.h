@@ -7,56 +7,66 @@
 #include <QtCore/QDir>
 #include <memory>
 
-class LicenseItem
-{
-public:
-  explicit LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
-  ~LicenseItem();
+namespace licenses {
 
-  void appendChild(LicenseItem *child);
+  class LicenseItem {
+  public:
+    explicit LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
 
-  LicenseItem *child(int row);
-  int childCount() const;
-  int columnCount() const;
-  QVariant data(int role) const;
-  QString path() const;
-  int row() const;
-  LicenseItem *parentItem();
+    ~LicenseItem();
 
-private:
-  QVector<LicenseItem*> m_childItems;
-  QList<QVariant> m_categories;
-  QVector<QVariant> m_itemData;
-  LicenseItem *m_parentItem;
-};
+    void appendChild(LicenseItem *child);
 
-class LicenseModel : public QAbstractItemModel {
+    LicenseItem *child(int row);
 
-public:
-  explicit LicenseModel(QObject *parent = nullptr);
+    int childCount() const;
 
-  ~LicenseModel() override;
+    int columnCount() const;
 
-  QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+    QVariant data(int role) const;
 
-  QModelIndex parent(const QModelIndex &child) const override;
+    QString path() const;
 
-  int rowCount(const QModelIndex &parent) const override;
+    int row() const;
 
-  int columnCount(const QModelIndex &parent) const override;
+    LicenseItem *parentItem();
 
-  QVariant data(const QModelIndex &index, int role) const override;
+  private:
+    QVector<LicenseItem *> m_childItems;
+    QList<QVariant> m_categories;
+    QVector<QVariant> m_itemData;
+    LicenseItem *m_parentItem;
+  };
 
-  Qt::ItemFlags flags(const QModelIndex &index) const override;
+  class LicenseModel : public QAbstractItemModel {
 
-  QVariant headerData(int section, Qt::Orientation orientation,
-                      int role = Qt::DisplayRole) const override;
+  public:
+    explicit LicenseModel(QObject *parent = nullptr);
 
-private:
-  void populate();
+    ~LicenseModel() override;
 
-  QDir m_dir;
-  std::unique_ptr<LicenseItem> rootItem;
-};
+    QModelIndex index(int row, int column, const QModelIndex &parent) const override;
+
+    QModelIndex parent(const QModelIndex &child) const override;
+
+    int rowCount(const QModelIndex &parent) const override;
+
+    int columnCount(const QModelIndex &parent) const override;
+
+    QVariant data(const QModelIndex &index, int role) const override;
+
+    Qt::ItemFlags flags(const QModelIndex &index) const override;
+
+    QVariant headerData(int section, Qt::Orientation orientation,
+                        int role = Qt::DisplayRole) const override;
+
+  private:
+    void populate();
+
+    QDir m_dir;
+    std::unique_ptr<LicenseItem> rootItem;
+  };
+
+}
 
 #endif //TURTLEBROWSER_LICENSEMODEL_H

@@ -9,19 +9,19 @@ public:
 
   Context();
 
-  LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
-  LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
-  LicenseFilter * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
-  LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
+  licenses::LicenseFilter * searchModelWebLicenses() { return &m_filterLicenseModelWebView; }
+  licenses::LicenseFilter * searchModelToolkitLicenses() { return &m_filterLicenseModelToolkit; }
+  licenses::LicenseFilter * searchModelPlatformLicenses() { return &m_filterLicenseModelPlatform; }
+  licenses::LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
 
 private:
-  LicenseModel m_licenseModel;
-  LicenseFilter m_filterLicenseModelWebView;
-  LicenseFilter m_filterLicenseModelToolkit;
-  LicenseFilter m_filterLicenseModelPlatform;
-  LicenseFilter m_filterLicenseModelAll;
+  licenses::LicenseModel m_licenseModel;
+  licenses::LicenseFilter m_filterLicenseModelWebView;
+  licenses::LicenseFilter m_filterLicenseModelToolkit;
+  licenses::LicenseFilter m_filterLicenseModelPlatform;
+  licenses::LicenseFilter m_filterLicenseModelAll;
 
-  static void connectSearchModel(LicenseModel * model, LicenseFilter & search_model, LicenseCategory category);
+  static void connectSearchModel(licenses::LicenseModel * model, licenses::LicenseFilter & search_model, licenses::LicenseCategory category);
 };
 
 #endif //TURTLEBROWSER_CONTEXT_H

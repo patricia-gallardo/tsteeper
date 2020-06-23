@@ -5,23 +5,26 @@
 
 #include <QtCore/QSortFilterProxyModel>
 
-class LicenseFilter : public QSortFilterProxyModel
-{
+namespace licenses {
+
+  class LicenseFilter : public QSortFilterProxyModel {
   Q_OBJECT
 
-public:
+  public:
 
-  explicit LicenseFilter(QObject *parent = nullptr);
+    explicit LicenseFilter(QObject *parent = nullptr);
 
-  Q_INVOKABLE QString readFile(const QModelIndex &index);
+    Q_INVOKABLE QString readFile(const QModelIndex &index);
 
-  void setCategory(const LicenseCategory &cat) { m_category = cat; }
+    void setCategory(const LicenseCategory &cat) { m_category = cat; }
 
-protected:
-  bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
+  protected:
+    bool filterAcceptsRow(int source_row, const QModelIndex &source_parent) const override;
 
-private:
-  LicenseCategory m_category;
-};
+  private:
+    LicenseCategory m_category;
+  };
+
+}
 
 #endif //TURTLEBROWSER_LICENSEFILTER_H

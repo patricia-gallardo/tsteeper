@@ -3,40 +3,44 @@
 #include <QtCore/QFile>
 #include <QTextStream>
 
-LicenseFilter::LicenseFilter(QObject *parent) : QSortFilterProxyModel(parent) {}
+namespace licenses {
 
-bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
-  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+  LicenseFilter::LicenseFilter(QObject *parent) : QSortFilterProxyModel(parent) {}
 
-  auto categories = sourceModel()->data(index, LicenseCategories).toList();
+  bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
+    QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
 
-  bool support = false;
+    auto categories = sourceModel()->data(index, LicenseCategories).toList();
 
-  for (const auto & category : categories) {
-    auto cat = static_cast<LicenseCategory>(category.toInt());
-    if (cat == m_category)
-      support = true;
+    bool support = false;
+
+    for (const auto &category : categories) {
+      auto cat = static_cast<LicenseCategory>(category.toInt());
+      if (cat == m_category)
+        support = true;
+    }
+
+    if (!support)
+      return false;
+
+    QString filename = sourceModel()->data(index).toString();
+    QString path = sourceModel()->data(index, Qt::UserRole).toString();
+    return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
   }
 
-  if (!support)
-    return false;
+  QString LicenseFilter::readFile(const QModelIndex &index) {
 
-  QString filename = sourceModel()->data(index).toString();
-  QString path = sourceModel()->data(index, Qt::UserRole).toString();
-  return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
-}
+    QString fileName = sourceModel()->data(mapToSource(index), Qt::UserRole).toString();
 
-QString LicenseFilter::readFile(const QModelIndex &index) {
+    if (fileName.isEmpty())
+      return QString();
 
-  QString fileName = sourceModel()->data(mapToSource(index), Qt::UserRole).toString();
-
-  if (fileName.isEmpty())
+    QFile file(fileName);
+    if (file.open(QIODevice::ReadOnly | QFile::Text)) {
+      QTextStream t(&file);
+      return t.readAll();
+    }
     return QString();
-
-  QFile file(fileName);
-  if ( file.open(QIODevice::ReadOnly | QFile::Text) ) {
-    QTextStream t( &file );
-    return t.readAll();
   }
-  return QString();
+
 }
