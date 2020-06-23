@@ -1,4 +1,4 @@
-<RCC><qresource prefix="/licenses/linux/licenses">
+<RCC><qresource prefix="/">
 <file>licenses/linux/licenses/libxcb/licenses/COPYING</file>
 <file>licenses/linux/licenses/xtrans/licenses/COPYING</file>
 <file>licenses/linux/licenses/libxrender/licenses/COPYING</file>

@@ -99,7 +99,7 @@ confirm "Fix licenses? [y/N]" && cd ${APPLICATION_DIR} && find ${RELATIVE_LICENS
 
 confirm "Truncate qrc file? [y/N]" && cd ${APPLICATION_DIR} && : >${RELATIVE_QRC_PATH}
 
-confirm "Write start qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '<RCC><qresource prefix="/licenses/'${PLATFORM_NAME}'/licenses">' >>${RELATIVE_QRC_PATH}
+confirm "Write start qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '<RCC><qresource prefix="/">' >>${RELATIVE_QRC_PATH}
 
 confirm "Write licenses? [y/N]" && cd ${APPLICATION_DIR}/src/resources/ && find licenses/${PLATFORM_NAME}/ -type f -exec echo "<file>{}</file>" \; >>${QRC_FILENAME}
 

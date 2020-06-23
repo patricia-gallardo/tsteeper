@@ -1,4 +1,4 @@
-<RCC><qresource prefix="/licenses/windows/licenses">
+<RCC><qresource prefix="/">
 <file>licenses/windows/licenses/bzip2/licenses/LICENSE</file>
 <file>licenses/windows/licenses/double-conversion/licenses/LICENSE</file>
 <file>licenses/windows/licenses/freetype/licenses/FTL.TXT</file>
