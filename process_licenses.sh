@@ -63,7 +63,7 @@ export INSTALL_SUB_DIR=install_release
 export APPLICATION_INSTALL_DIR=${APPLICATION_DIR}/${INSTALL_SUB_DIR}
 export RELATIVE_LICENSE_PATH=src/resources/licenses/${PLATFORM_NAME}/
 export QRC_FILENAME=${PLATFORM_NAME}_licenses.qrc
-export RELATIVE_QRC_PATH=src/resources/${QRC_FILENAME}
+export RELATIVE_QRC_PATH=src/resources/licenses/${PLATFORM_NAME}/${QRC_FILENAME}
 
 header "Prepare Cache for update"
 
@@ -99,11 +99,11 @@ confirm "Fix licenses? [y/N]" && cd ${APPLICATION_DIR} && find ${RELATIVE_LICENS
 
 confirm "Truncate qrc file? [y/N]" && cd ${APPLICATION_DIR} && : >${RELATIVE_QRC_PATH}
 
-confirm "Write start qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '<RCC><qresource prefix="/">' >>${RELATIVE_QRC_PATH}
+confirm "Write start qrc file? [y/N]" && cd ${APPLICATION_DIR}/${RELATIVE_LICENSE_PATH} && echo '<RCC><qresource prefix="/">' >>${QRC_FILENAME}
 
-confirm "Write licenses? [y/N]" && cd ${APPLICATION_DIR}/src/resources/ && find licenses/${PLATFORM_NAME}/ -type f -exec echo "<file>{}</file>" \; >>${QRC_FILENAME}
+confirm "Write licenses? [y/N]" && cd ${APPLICATION_DIR}/${RELATIVE_LICENSE_PATH} && find licenses -type f -exec echo "<file>{}</file>" \; >>${QRC_FILENAME}
 
-confirm "Write end qrc file? [y/N]" && cd ${APPLICATION_DIR} && echo '</qresource></RCC>' >>${RELATIVE_QRC_PATH}
+confirm "Write end qrc file? [y/N]" && cd ${APPLICATION_DIR}/${RELATIVE_LICENSE_PATH} && echo '</qresource></RCC>' >>${QRC_FILENAME}
 
 confirm "Commit qrc file? [y/N]" && cd ${APPLICATION_DIR} && git add ${RELATIVE_QRC_PATH} && git commit -m "Updated qrc file"
 

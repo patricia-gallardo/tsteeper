@@ -11,13 +11,13 @@ option(CHECK_IN_LICENSES "Generate the licenses for the target platform and copy
 
 if (APPLE)
     set(TARGET_OS_NAME "macos")
-    set(LICENSE_QRC resources/linux_licenses.qrc)
+    set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
 elseif (MSVC)
     set(TARGET_OS_NAME "windows")
-    set(LICENSE_QRC resources/windows_licenses.qrc)
+    set(LICENSE_QRC resources/licenses/windows/windows_licenses.qrc)
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     set(TARGET_OS_NAME "linux")
-    set(LICENSE_QRC resources/linux_licenses.qrc)
+    set(LICENSE_QRC resources/licenses/linux/linux_licenses.qrc)
 endif ()
 
 if (CHECK_IN_LICENSES)
