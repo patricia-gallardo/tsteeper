@@ -1,9 +1,30 @@
 #include "LicenseFilter.h"
 
-#include <QDebug>
 #include <QtCore/QFile>
+#include <QTextStream>
 
 LicenseFilter::LicenseFilter(QObject *parent) : QSortFilterProxyModel(parent) {}
+
+bool LicenseFilter::filterAcceptsRow(int source_row, const QModelIndex &source_parent) const {
+  QModelIndex index = sourceModel()->index(source_row, 0, source_parent);
+
+  auto categories = sourceModel()->data(index, 257).toList();
+
+  bool support = false;
+
+  for (const auto & category : categories) {
+    auto cat = static_cast<LicenseCategory>(category.toInt());
+    if (cat == m_category)
+      support = true;
+  }
+
+  if (!support)
+    return false;
+
+  QString filename = sourceModel()->data(index).toString();
+  QString path = sourceModel()->data(index, Qt::UserRole).toString();
+  return (filename.contains(filterRegExp()) || path.contains(filterRegExp()));
+}
 
 QString LicenseFilter::readFile(const QModelIndex &index) {
 

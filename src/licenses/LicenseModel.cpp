@@ -14,88 +14,46 @@ static const char *const toolkitRootPath = ":/licenses/linux/licenses/licenses/l
 static const char *const webviewRootPath = ":/licenses/linux/licenses/licenses/linux/licenses/qt/licenses/qtwebengine/src/3rdparty/chromium";
 #endif
 
-static const char * getRootPath(LicenseType type) {
-  if (type == LicenseType::WebView)
-    return webviewRootPath;
-  if (type == LicenseType::Toolkit)
-    return toolkitRootPath;
-  return platformRootPath;
-}
-
-LicenseModel::LicenseModel(LicenseType type, QObject *parent) :
-    QAbstractItemModel(parent),
-    m_type(type),
-    m_dir(getRootPath(type)) {
+LicenseModel::LicenseModel(QObject *parent) : QAbstractItemModel(parent),  m_dir(platformRootPath) {
   populate();
 }
 
 LicenseModel::~LicenseModel() = default;
 
 void LicenseModel::populate() {
-  switch (m_type) {
-    case LicenseType::WebView: populateWebView(); break;
-    case LicenseType::Toolkit: populateToolkit(); break;
-    case LicenseType::Platform: populatePlatform(); break;
-    case LicenseType::All: populateAll(); break;
-  }
-}
-
-void LicenseModel::populateWebView() {
-  const char *rootPath = webviewRootPath;
-  QVector<QString> ignore_paths = {};
-  populateFromRoot(rootPath, "Chromium", ignore_paths);
-}
-
-void LicenseModel::populateToolkit() {
-  const char *rootPath = toolkitRootPath;
-  QVector<QString> ignore_paths = { QString(webviewRootPath) };
-  populateFromRoot(rootPath, "Qt", ignore_paths);
-
-}
-
-void LicenseModel::populatePlatform() {
-  const char *rootPath = platformRootPath;
-  QVector<QString> ignore_paths = { QString(qtRootPath) };
-  populateFromRoot(rootPath, "Platform", ignore_paths);
-}
-
-void LicenseModel::populateAll() {
-  const char *rootPath = platformRootPath;
-  QVector<QString> ignore_paths = {};
-  populateFromRoot(rootPath, "All", ignore_paths);
-}
-
-void LicenseModel::populateFromRoot(const char *rootPath, const char *rootName, QVector<QString> &ignore_paths) {
-  QVector<QVariant> data = {QString(rootName)};
-  rootItem = std::make_unique<LicenseItem>(data);
+  QList<QVariant> root_categories;
+  QVector<QVariant> rootData = {QString("Licenses"), QString(platformRootPath) };
+  rootItem = std::make_unique<LicenseItem>(rootData, root_categories);
 
   QHash<QString, LicenseItem *> map;
-  map[rootPath] = rootItem.get();
+  map[rootItem->path()] = rootItem.get();
 
   QDirIterator it(m_dir, QDirIterator::Subdirectories);
 
   while (it.hasNext()) {
     QString path = it.next();
 
-    bool should_skip = false;
+    QList<QVariant> categories;
+    categories.append(QVariant(static_cast<int>(LicenseCategory::All)));
 
-    for (const auto & ignore: ignore_paths) {
-      if (path.startsWith(ignore))
-        should_skip = true;
-    }
+    if (path.startsWith(webviewRootPath))
+      categories.append(QVariant(static_cast<int>(LicenseCategory::WebView)));
 
-    if (should_skip)
-      continue;
+    if (path.startsWith(toolkitRootPath) && !path.startsWith(webviewRootPath))
+      categories.append(QVariant(static_cast<int>(LicenseCategory::Toolkit)));
+
+    if (path.startsWith(platformRootPath) && !path.startsWith(qtRootPath))
+      categories.append(QVariant(static_cast<int>(LicenseCategory::Platform)));
 
     const QFileInfo &fileInfo = it.fileInfo();
     LicenseItem *parent = map[fileInfo.dir().path()];
 
     QVector<QVariant> child_data = { fileInfo.fileName(), fileInfo.absoluteFilePath() };
-    LicenseItem *child = new LicenseItem(child_data, parent);
+    auto *child = new LicenseItem(child_data, categories, parent);
     parent->appendChild(child);
 
     if (fileInfo.isDir())
-      map[path] = child;
+      map[child->path()] = child;
   }
 }
 
@@ -122,7 +80,7 @@ QModelIndex LicenseModel::parent(const QModelIndex &index) const
   if (!index.isValid())
     return QModelIndex();
 
-  LicenseItem *childItem = static_cast<LicenseItem*>(index.internalPointer());
+  auto *childItem = static_cast<LicenseItem*>(index.internalPointer());
   LicenseItem *parentItem = childItem->parentItem();
 
   if (parentItem == rootItem.get())
@@ -157,10 +115,10 @@ QVariant LicenseModel::data(const QModelIndex &index, int role) const
   if (!index.isValid())
     return QVariant();
 
-  if (role != Qt::DisplayRole && role != Qt::UserRole)
+  if (role != Qt::DisplayRole && role != Qt::UserRole && role != 257)
     return QVariant();
 
-  LicenseItem *item = static_cast<LicenseItem*>(index.internalPointer());
+  auto *item = static_cast<LicenseItem*>(index.internalPointer());
 
   return item->data(role);
 }
@@ -182,8 +140,8 @@ QVariant LicenseModel::headerData(int section, Qt::Orientation orientation,
   return QVariant();
 }
 
-LicenseItem::LicenseItem(const QVector<QVariant> &data, LicenseItem *parent)
-    : m_itemData(data), m_parentItem(parent)
+LicenseItem::LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parent)
+    : m_itemData(std::move(data)), m_categories(std::move(categories)), m_parentItem(parent)
 {}
 
 LicenseItem::~LicenseItem()
@@ -226,8 +184,14 @@ QVariant LicenseItem::data(int role) const
   switch (role) {
     case Qt::DisplayRole : return m_itemData.at(0);
     case Qt::UserRole : return m_itemData.at(1);
+    case 257 : return m_categories;
     default: return QVariant();
   }
+}
+
+QString LicenseItem::path() const
+{
+  return data(Qt::UserRole).toString();
 }
 
 LicenseItem *LicenseItem::parentItem()

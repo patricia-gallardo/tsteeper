@@ -15,20 +15,13 @@ public:
   LicenseFilter * searchModelAllLicenses() { return &m_filterLicenseModelAll; }
 
 private:
-
-  // License Models
-  LicenseModel m_licenseModelWebView;
-  LicenseModel m_licenseModelToolkit;
-  LicenseModel m_licenseModelPlatform;
-  LicenseModel m_licenseModelAll;
-
-  // License Search Models
+  LicenseModel m_licenseModel;
   LicenseFilter m_filterLicenseModelWebView;
   LicenseFilter m_filterLicenseModelToolkit;
   LicenseFilter m_filterLicenseModelPlatform;
   LicenseFilter m_filterLicenseModelAll;
 
-  static void connectSearchModel(LicenseModel * model, QSortFilterProxyModel & search_model);
+  static void connectSearchModel(LicenseModel * model, LicenseFilter & search_model, LicenseCategory category);
 };
 
 #endif //TURTLEBROWSER_CONTEXT_H

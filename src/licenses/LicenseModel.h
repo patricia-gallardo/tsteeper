@@ -1,21 +1,16 @@
 #ifndef TURTLEBROWSER_LICENSEMODEL_H
 #define TURTLEBROWSER_LICENSEMODEL_H
 
+#include "licenses/LicenseCategory.h"
+
 #include <QtCore/QAbstractItemModel>
 #include <QtCore/QDir>
 #include <memory>
 
-enum class LicenseType {
-  WebView,
-  Toolkit,
-  Platform,
-  All
-};
-
 class LicenseItem
 {
 public:
-  explicit LicenseItem(const QVector<QVariant> &data, LicenseItem *parentItem = nullptr);
+  explicit LicenseItem(QVector<QVariant> data, QList<QVariant> categories, LicenseItem *parentItem = nullptr);
   ~LicenseItem();
 
   void appendChild(LicenseItem *child);
@@ -24,11 +19,13 @@ public:
   int childCount() const;
   int columnCount() const;
   QVariant data(int role) const;
+  QString path() const;
   int row() const;
   LicenseItem *parentItem();
 
 private:
   QVector<LicenseItem*> m_childItems;
+  QList<QVariant> m_categories;
   QVector<QVariant> m_itemData;
   LicenseItem *m_parentItem;
 };
@@ -36,7 +33,7 @@ private:
 class LicenseModel : public QAbstractItemModel {
 
 public:
-  LicenseModel(LicenseType type, QObject *parent = nullptr);
+  explicit LicenseModel(QObject *parent = nullptr);
 
   ~LicenseModel() override;
 
@@ -56,15 +53,8 @@ public:
                       int role = Qt::DisplayRole) const override;
 
 private:
-
   void populate();
-  void populateWebView();
-  void populateToolkit();
-  void populatePlatform();
-  void populateAll();
-  void populateFromRoot(const char *rootPath, const char *rootName, QVector<QString> &ignore_paths);
 
-  LicenseType m_type;
   QDir m_dir;
   std::unique_ptr<LicenseItem> rootItem;
 };
