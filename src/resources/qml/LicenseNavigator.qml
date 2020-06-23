@@ -10,6 +10,27 @@ ColumnLayout {
     property string licenseText
     signal displayLicense
 
+    function expandToRootIndex(index) {
+        var ancestor = index
+        do {
+            tree.expand(ancestor)
+            ancestor = model.parent(ancestor)
+        } while (ancestor.valid)
+    }
+
+    function expandToRootIndexList(indexList) {
+        for (var i = 0; i < indexList.length; i++) {
+            expandToRootIndex(indexList[i])
+        }
+    }
+
+    function search(text) {
+        model.setFilterFixedString(text)
+        var indexList = model.match(model.index(0, 0), Qt.DisplayRole, text,
+                                    -1, Qt.MatchContains | Qt.MatchRecursive)
+        expandToRootIndexList(indexList)
+    }
+
     Classic.TreeView {
         id: tree
 

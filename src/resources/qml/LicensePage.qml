@@ -133,8 +133,7 @@ ColumnLayout {
                 }
 
                 function search(text) {
-                    var currentItem = treeStack.children[tabBar.currentIndex]
-                    currentItem.model.setFilterFixedString(text)
+                    treeStack.children[tabBar.currentIndex].search(text)
                 }
 
                 StackLayout {

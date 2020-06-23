@@ -16,4 +16,6 @@ void Context::connectSearchModel(LicenseModel * model, LicenseFilter & search_mo
   search_model.setFilterKeyColumn(0);
   search_model.setFilterRole(Qt::DisplayRole);
   search_model.setRecursiveFilteringEnabled(true);
+  search_model.setFilterCaseSensitivity(Qt::CaseInsensitive);
+  search_model.setSortCaseSensitivity(Qt::CaseInsensitive);
 }
