@@ -13,6 +13,21 @@ ColumnLayout {
     property string licenseText
     signal displayLicense
 
+    function getAll() {
+        return model.match(model.index(0, 0), Qt.DisplayRole, "*", -1, Qt.MatchWildcard | Qt.MatchRecursive)
+    }
+
+    function getMatching(text) {
+        return model.match(model.index(0, 0), Qt.DisplayRole, text, -1, Qt.MatchContains | Qt.MatchRecursive)
+    }
+
+    function collapseAll() {
+        var indexList = getAll()
+        for (var i = 0; i < indexList.length; i++) {
+            tree.collapse(indexList[i])
+        }
+    }
+
     function expandToRootIndex(index) {
         var ancestor = index
         do {
@@ -28,10 +43,12 @@ ColumnLayout {
     }
 
     function search(text) {
+        collapseAll()
         model.setFilterFixedString(text)
-        var indexList = model.match(model.index(0, 0), Qt.DisplayRole, text,
-                                    -1, Qt.MatchContains | Qt.MatchRecursive)
-        expandToRootIndexList(indexList)
+        if (text) {
+            var indexList = getMatching(text)
+            expandToRootIndexList(indexList)
+        }
     }
 
     Classic.TreeView {
