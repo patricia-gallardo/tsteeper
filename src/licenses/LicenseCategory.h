@@ -10,4 +10,10 @@ enum class LicenseCategory {
   WebView = 3
 };
 
+enum LicenseRoles {
+  LicenseFileName = Qt::DisplayRole,
+  LicenseFilePath = Qt::UserRole,
+  LicenseCategories = Qt::UserRole + 1
+};
+
 #endif //TURTLEBROWSER_LICENSECATEGORY_H

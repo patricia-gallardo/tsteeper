@@ -108,7 +108,7 @@ QVariant LicenseModel::data(const QModelIndex &index, int role) const
   if (!index.isValid())
     return QVariant();
 
-  if (role != Qt::DisplayRole && role != Qt::UserRole && role != 257)
+  if (role != LicenseFileName && role != LicenseFilePath && role != LicenseCategories)
     return QVariant();
 
   auto *item = static_cast<LicenseItem*>(index.internalPointer());
@@ -175,9 +175,9 @@ int LicenseItem::columnCount() const
 QVariant LicenseItem::data(int role) const
 {
   switch (role) {
-    case Qt::DisplayRole : return m_itemData.at(0);
-    case Qt::UserRole : return m_itemData.at(1);
-    case 257 : return m_categories;
+    case LicenseFileName : return m_itemData.at(0);
+    case LicenseFilePath : return m_itemData.at(1);
+    case LicenseCategories : return m_categories;
     default: return QVariant();
   }
 }
