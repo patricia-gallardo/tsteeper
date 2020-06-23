@@ -1,6 +1,9 @@
 import QtQuick 2.15
 import QtQuick.Controls 1.4 as Classic
+import QtQuick.Controls.Styles 1.4 as ClassicStyles
 import QtQuick.Layouts 1.15
+
+import "icons.js" as Icons
 
 ColumnLayout {
     id: root
@@ -62,6 +65,14 @@ ColumnLayout {
                 elide: styleData.elideMode
                 text: styleData.value
                 font.pointSize: root.pointSize
+            }
+        }
+
+        style: ClassicStyles.TreeViewStyle {
+            branchDelegate: Image {
+                width: 15
+                height: 15
+                source: styleData.isExpanded ? Icons.minimizeIcon : Icons.newTabIcon
             }
         }
 
